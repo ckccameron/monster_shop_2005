@@ -5,9 +5,9 @@ RSpec.describe 'new user page', type: :feature do
 
     visit '/'
 
-    within "nav" do
+    within "topnav" do
       expect(page).to have_link('Register')
-      click_on "register"
+      click_on "Register"
     end
 
     expect(current_path).to eq('/register')
