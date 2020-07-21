@@ -14,7 +14,7 @@ RSpec.describe 'new user page', type: :feature do
 
     password = "test"
 
-    within 'registration_form' do
+    within '.registration_form' do
       expect(page).to have_content('Name')
       expect(page).to have_content('Address')
       expect(page).to have_content('City')
@@ -22,7 +22,7 @@ RSpec.describe 'new user page', type: :feature do
       expect(page).to have_content('Zip')
       expect(page).to have_content('Email')
       expect(page).to have_content('Password')
-      expect(page).to have_content('Confirm Password')
+      expect(page).to have_content('Confirm password')
 
       fill_in 'Name', with: 'Neeru Eric'
       fill_in 'Address', with: '33 Chery St'
@@ -31,8 +31,7 @@ RSpec.describe 'new user page', type: :feature do
       fill_in 'Zip', with: '12345'
       fill_in 'Email', with: 'neeru_is_cool@turing.io'
       fill_in 'Password', with: password
-      fill_in 'Confirm Password', with: password
-
+      fill_in 'Confirm password', with: password
       click_on 'Create User'
     end
 
