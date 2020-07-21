@@ -39,4 +39,21 @@ RSpec.describe 'new user page', type: :feature do
 
     expect(page).to have_content('You are now registered and logged in')
   end
+  it 'cannot create a user without required fields' do
+    visit '/register'
+
+    within '.registration_form' do
+      fill_in 'Name', with: 'Neeru Eric'
+      fill_in 'Address', with: '33 Chery St'
+      fill_in 'City', with: 'Denver'
+      fill_in 'State', with: 'CO'
+      fill_in 'Zip', with: '12345'
+      fill_in 'Password', with: password
+      fill_in 'Confirm password', with: password
+      click_on 'Create User'
+    end
+
+    expect(current_path).to eq('/register')
+    expect(page).to have_content('You are missing required fields')
+  end
 end
