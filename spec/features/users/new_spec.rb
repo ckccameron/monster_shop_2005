@@ -56,6 +56,7 @@ RSpec.describe 'new user page', type: :feature do
     end
 
     expect(current_path).to eq('/register')
-    expect(page).to have_content('You are missing required fields')
+
+    expect(page).to have_content("Email can't be blank")
   end
 end
