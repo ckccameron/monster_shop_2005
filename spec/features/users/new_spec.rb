@@ -42,6 +42,8 @@ RSpec.describe 'new user page', type: :feature do
   it 'cannot create a user without required fields' do
     visit '/register'
 
+    password = "test"
+
     within '.registration_form' do
       fill_in 'Name', with: 'Neeru Eric'
       fill_in 'Address', with: '33 Chery St'
