@@ -10,7 +10,7 @@ RSpec.describe "Logging in to your account" do
   it "When a regular user visits the login path they can enter information in to login and are directed to profile page" do
     visit '/login'
 
-    fill_in :email, with: @regular_user.name
+    fill_in :email, with: @regular_user.email
     fill_in :password, with: @regular_user.password
     click_on "Submit Information"
     expect(current_path).to eq("/profile")
@@ -19,7 +19,7 @@ RSpec.describe "Logging in to your account" do
   # it "When a merchant user visits the login path they can enter information in to login and are directed to merchant dashboard" do
   #   visit '/login'
   #
-  #   fill_in email:, :with @merchant_user.name
+  #   fill_in email:, :with @merchant_user.email
   #   fill_in password:, :with @merchant_user.password
   #   click_on "Submit Information"
   #   expect(current_path).to eq("/merchant")
@@ -28,7 +28,7 @@ RSpec.describe "Logging in to your account" do
   # it "When an admin user visits the login path they can enter information in to login and are directed to admin dashboard" do
   #   visit '/login'
   #
-  #   fill_in email:, :with @admin_user.name
+  #   fill_in email:, :with @admin_user.email
   #   fill_in password:, :with @admin_user.password
   #   click_on "Submit Information"
   #   expect(current_path).to eq("/merchant")
