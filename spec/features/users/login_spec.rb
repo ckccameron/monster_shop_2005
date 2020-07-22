@@ -44,8 +44,10 @@ RSpec.describe "Logging in to your account" do
 
     fill_in :email, with: @admin_user.email
     fill_in :password, with: "thisisthewrongpassword"
+    click_on "Submit Information"
 
     expect(current_path).to eq("/login")
-    expect(page).to have_content("Your credentials are invalid")
+    expect(page).to have_content("Sorry, your credentials are invalid")
+    save_and_open_page
   end
 end
