@@ -15,28 +15,29 @@ RSpec.describe "Logging in to your account" do
     click_on "Submit Information"
 
     expect(current_path).to eq("/profile")
+    expect(page).to have_content("You are now registered and logged in")
   end
 
   it "When a merchant user visits the login path they can enter information in to login and are directed to merchant dashboard" do
     visit '/login'
-
-    allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@merchant_user)
 
     fill_in :email, with: @merchant_user.email
     fill_in :password, with: @merchant_user.password
     click_on "Submit Information"
 
     expect(current_path).to eq("/merchant")
+    expect(page).to have_content("You are now registered and logged in")
   end
-  #
-  # it "When an admin user visits the login path they can enter information in to login and are directed to admin dashboard" do
-  #   visit '/login'
-  #
-  #   fill_in email:, :with @admin_user.email
-  #   fill_in password:, :with @admin_user.password
-  #   click_on "Submit Information"
-  #   expect(current_path).to eq("/admin")
-  # end
+
+  it "When an admin user visits the login path they can enter information in to login and are directed to admin dashboard" do
+    visit '/login'
+
+    fill_in :email, with: @admin_user.email
+    fill_in :password, with: @admin_user.password
+    click_on "Submit Information"
+    expect(current_path).to eq("/admin")
+    expect(page).to have_content("You are now registered and logged in")
+  end
 end
 
 
