@@ -38,16 +38,14 @@ RSpec.describe "Logging in to your account" do
     expect(current_path).to eq("/admin")
     expect(page).to have_content("You are now registered and logged in")
   end
+
+  it "user cannot log in with bad credentials" do
+    visit "/login"
+
+    fill_in :email, with: @admin_user.email
+    fill_in :password, with: "thisisthewrongpassword"
+
+    expect(current_path).to eq("/login")
+    expect(page).to have_content("Your credentials are invalid")
+  end
 end
-
-
-# User Story 13, User can Login
-#
-# As a visitor
-# When I visit the login path
-# I see a field to enter my email address and password
-# When I submit valid information
-# If I am a regular user, I am redirected to my profile page --> /profile
-# If I am a merchant user, I am redirected to my merchant dashboard page --> /merchant
-# If I am an admin user, I am redirected to my admin dashboard page --> /admin
-# And I see a flash message that I am logged in
