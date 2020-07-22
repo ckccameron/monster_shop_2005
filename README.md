@@ -284,7 +284,7 @@ Our application wouldn't be much use if users could not log in to use it.
 
 
 ```
-[ ] done
+[X] done
 
 User Story 13, User can Login
 
@@ -299,7 +299,7 @@ And I see a flash message that I am logged in
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 14, User cannot log in with bad credentials
 
