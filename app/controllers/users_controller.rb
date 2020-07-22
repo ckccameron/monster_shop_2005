@@ -24,6 +24,7 @@ class UsersController < ApplicationController
                   :state,
                   :zip,
                   :email,
-                  :password)
+                  :password,
+                  :role)
   end
 end
