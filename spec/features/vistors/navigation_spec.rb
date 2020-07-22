@@ -7,12 +7,11 @@ RSpec.describe 'Site Navigation' do
 
       within(".topnav") do
         expect(page).to have_link("Home Page")
-        expect(page).to have_link("All Items for Sale")
-        expect(page).to have_link("All Merchants")
-        expect(page).to have_link("Cart")
-        expect(page).to have_content("Items in Cart: 0")
-        expect(page).to have_link("Login")
         expect(page).to have_link("Register")
+        expect(page).to have_link("Login")
+        expect(page).to have_link("All Merchants")
+        expect(page).to have_link("All Items")
+        expect(page).to have_link("Cart: 0")
       end
     end
   end
