@@ -17,10 +17,10 @@ RSpec.describe 'Site Navigation' do
     it "cannot access merchant, admin, or profile pages" do
       visit '/'
 
-      visit '/merchant'
+      visit '/admin'
       expect(page).to have_content("404 Error: Content not found")
 
-      visit '/admin'
+      visit '/merchant'
       expect(page).to have_content("404 Error: Content not found")
 
       visit '/profile'
