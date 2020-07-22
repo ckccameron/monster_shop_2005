@@ -18,13 +18,13 @@ RSpec.describe 'Site Navigation' do
       visit '/'
 
       visit '/admin'
-      expect(page).to have_content("404 Error: Content not found")
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
 
       visit '/merchant'
-      expect(page).to have_content("404 Error: Content not found")
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
 
       visit '/profile'
-      expect(page).to have_content("404 Error: Content not found")
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
     end
   end
 end
