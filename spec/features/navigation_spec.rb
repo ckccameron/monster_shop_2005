@@ -65,4 +65,55 @@ RSpec.describe 'Site Navigation' do
       # expect(current_path).to eq('/')
     end
   end
+
+  describe 'As an admin' do
+    it 'displays nav bar with same links as regular user including admin specfic links' do
+      admin = User.create(name: 'Napoleon Bonaparte',
+                          address: '33 Shorty Ave',
+                          city: 'Los Angeles',
+                          state: 'CA',
+                          zip: '12345',
+                          email: 'french_people_rule@turing.io',
+                          password: 'test125',
+                          role: 2)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(admin)
+
+      visit '/merchants'
+
+      within 'nav' do
+        click_link 'Home'
+      end
+
+      expect(current_path).to eq('/')
+
+      within 'nav' do
+        click_link 'All Merchants'
+      end
+
+      expect(current_path).to eq('/merchants')
+
+      within 'nav' do
+        click_link 'All Items'
+      end
+
+      expect(current_path).to eq('/items')
+
+      within 'nav' do
+        click_link 'Admin Dashboard'
+      end
+
+      expect(current_path).to eq('/admin')
+
+      within 'nav' do
+        click_link 'All Users'
+      end
+
+      expect(current_path).to eq('/admin/users')
+
+      within 'nav' do
+        expect(page).to_not have_content('Cart: 0')
+      end
+    end
+  end
 end
