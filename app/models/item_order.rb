@@ -7,4 +7,8 @@ class ItemOrder <ApplicationRecord
   def subtotal
     price * quantity
   end
+
+  def self.top_5_items
+
+  end
 end
