@@ -3,7 +3,6 @@ class UsersController < ApplicationController
   end
 
   def create
-    #require "pry"; binding.pry
     user = User.create(user_params)
     session[:user_id] = user.id
     if user.save
@@ -16,9 +15,20 @@ class UsersController < ApplicationController
   end
 
   def show
-    #require "pry"; binding.pry
     @user = User.find(session[:user_id])
     render file: "/public/404" if !current_user
+  end
+
+  def edit
+    @user = User.find(session[:user_id])
+  end
+
+  def update
+    user = User.find(session[:user_id])
+    user.update(user_params)
+    user.save
+    flash[:notice] = "Profile updated successfully"
+    redirect_to "/profile"
   end
 
   private
@@ -29,7 +39,6 @@ class UsersController < ApplicationController
                   :state,
                   :zip,
                   :email,
-                  :password,
-                  :role)
+                  :password)
   end
 end

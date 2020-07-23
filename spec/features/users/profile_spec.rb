@@ -22,4 +22,45 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(page).to have_content(@regular_user.email)
     expect(page).to have_content("Edit Profile")
   end
+
+  it "When I click the link to edit my profile data " do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Profile"
+
+    expect(current_path).to eq("/profile/edit")
+
+    expect(find_field(:name).value).to eq(@regular_user.name)
+    expect(find_field(:address).value).to eq(@regular_user.address)
+    expect(find_field(:city).value).to eq(@regular_user.city)
+    expect(find_field(:state).value).to eq(@regular_user.state)
+    expect(find_field(:zip).value).to eq(@regular_user.zip)
+    expect(find_field(:email).value).to eq(@regular_user.email)
+
+    fill_in :state, with: "KY"
+
+    click_button "Submit Data"
+
+    expect(current_path).to eq("/profile")
+
+    expect(page).to have_content("Profile updated successfully")
+
+    expect(page).to have_content("KY")
+    expect(page).to_not have_content("CO")
+  end
 end
+
+# When I click on the link to edit my profile data
+# I see a form like the registration page
+# The form is prepopulated with all my current information except my password
+# When I change any or all of that information
+# And I submit the form
+# Then I am returned to my profile page
+# And I see a flash message telling me that my data is updated
+# And I see my updated information
