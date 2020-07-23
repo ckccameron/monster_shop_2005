@@ -65,7 +65,7 @@ RSpec.describe "Items Index Page" do
       fill_in :password, with: @rmerchant_user.password
       click_on "Submit Information"
 
-      visit items_path
+      visit '/items'
 
       within "#item-#{@tire.id}" do
         expect(page).to have_link(@tire.name)
@@ -101,7 +101,7 @@ RSpec.describe "Items Index Page" do
       fill_in :password, with: @admin_user.password
       click_on "Submit Information"
 
-      visit items_path
+      visit '/items'
 
       within "#item-#{@tire.id}" do
         expect(page).to have_link(@tire.name)
@@ -137,7 +137,7 @@ RSpec.describe "Items Index Page" do
       fill_in :password, with: @admin_user.password
       click_on "Submit Information"
 
-      visit items_path
+      visit '/items'
 
       within "#item-#{@tire.id}" do
         expect(page).to have_link(@tire.name)
@@ -165,6 +165,12 @@ RSpec.describe "Items Index Page" do
         expect(page).to_not have_content("Inactive")
         expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
         expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
+    end
+
+    it "The item image is a link to that item's show page" do
+      visit '/items'
+      find(:xpath, "//a/img[@alt='image-#{@tire.id}']/..").click
+      expect(current_path).to eq("/items/#{@tire.id}")
     end
   end
 end
