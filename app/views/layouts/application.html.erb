@@ -14,14 +14,22 @@
       <%= link_to "Register", "/register" %>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
-      <%= link_to "Cart: #{cart.total_items}", "/cart" %>
 
       <% if current_user && current_user.role == "merchant" %>
+        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
         <%= link_to "Profile", "/profile" %>
         <%= link_to "Merchant Dashboard", "/merchant" %>
-      <% end %>
 
+      <% elsif current_user && current_user.role == "admin" %>
+        <%= link_to "Profile", "/profile" %>
+        <%= link_to "Admin Dashboard", "/admin" %>
+        <%= link_to "All Users", "/admin/users" %>
+
+      <% else %>
+        <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+      <% end %>
     </nav>
+
     <% flash.each do |name, msg| %>
       <div class= "<%=name%>-flash">
         <p><%= msg %></p>
