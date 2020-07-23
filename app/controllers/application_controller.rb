@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   def logged_in?
     session[:user_id].present?
   end
-    
+
   def current_admin?
     current_user && current_user.admin?
   end

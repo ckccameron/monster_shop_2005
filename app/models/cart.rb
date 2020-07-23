@@ -6,7 +6,6 @@ class Cart
   end
 
   def add_item(item)
-    require "pry"; binding.pry
     @contents[item] = 0 if !@contents[item]
     @contents[item] += 1
   end

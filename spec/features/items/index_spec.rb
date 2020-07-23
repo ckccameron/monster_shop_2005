@@ -216,7 +216,6 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_content("#{@scratch_pad.name} - 2 units purchased")
         expect(page).to have_content("#{@tire.name} - 6 units purchased")
         expect(page).to have_content("#{@catnip.name} - 50 units purchased")
-        save_and_open_page
       end
     end
   end
