@@ -16,13 +16,15 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       if user.role == "default"
         redirect_to '/profile'
-        flash[:success] = "You are now registered and logged in"
+        flash[:success] = "Logged in as #{user.name}"
+
       elsif user.role == "merchant"
         redirect_to '/merchant'
-        flash[:success] = "You are now registered and logged in"
+        flash[:success] = "Logged in as #{user.name}"
+
       else user.role == "admin"
         redirect_to '/admin'
-        flash[:success] = "You are now registered and logged in"
+        flash[:success] = "Logged in as #{user.name}"
       end
     else
       flash[:error] = "Sorry, your credentials are invalid"
