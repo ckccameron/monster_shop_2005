@@ -15,7 +15,8 @@ RSpec.describe "Logging in to your account" do
     click_on "Submit Information"
 
     expect(current_path).to eq("/profile")
-    expect(page).to have_content("You are now registered and logged in")
+    expect(page).to have_content(("Logged in as #{@regular_user.name}"))
+
   end
 
   it "When a merchant user visits the login path they can enter information in to login and are directed to merchant dashboard" do
@@ -26,7 +27,7 @@ RSpec.describe "Logging in to your account" do
     click_on "Submit Information"
 
     expect(current_path).to eq("/merchant")
-    expect(page).to have_content("You are now registered and logged in")
+    expect(page).to have_content("Logged in as #{@merchant_user.name}")
   end
 
   it "When an admin user visits the login path they can enter information in to login and are directed to admin dashboard" do
@@ -36,7 +37,7 @@ RSpec.describe "Logging in to your account" do
     fill_in :password, with: @admin_user.password
     click_on "Submit Information"
     expect(current_path).to eq("/admin")
-    expect(page).to have_content("You are now registered and logged in")
+    expect(page).to have_content("Logged in as #{@admin_user.name}")
   end
 
   it "user cannot log in with bad credentials" do
