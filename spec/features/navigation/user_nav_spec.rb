@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "user navigation bar" do
+RSpec.describe "user navigation" do
   before(:each) do
     @user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
   end
@@ -16,5 +16,12 @@ RSpec.describe "user navigation bar" do
     expect(page).to have_content('Profile')
     expect(page).to have_content('Log Out')
     expect(page).to_not have_content('Login')
+  end
+  it "cannot access any path that begins with /admin or /merchant" do
+    visit '/login'
+
+    fill_in :email, with: @user.email
+    fill_in :password, with: @user.password
+    click_on "Submit Information"
   end
 end
