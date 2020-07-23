@@ -64,6 +64,23 @@ RSpec.describe 'Site Navigation' do
       # click_link 'Log out'
       # expect(current_path).to eq('/')
     end
+
+    it "cannot access /admin" do
+      merchant = User.create(name: 'Ross Geller',
+                            address: '33 Banana St',
+                            city: 'New York',
+                            state: 'NY',
+                            zip: '12345',
+                            email: 'dinosaurs_are_cool@turing.io',
+                            password: 'test124',
+                            role: 1)
+
+      allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)
+
+      visit "/admin"
+
+      expect(page).to have_content("The page you were looking for doesn't exist (404)")
+    end
   end
 
   describe 'As an admin' do
