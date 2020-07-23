@@ -62,7 +62,7 @@ RSpec.describe "Logging in to your account" do
     expect(current_path).to eq("/profile")
     expect(page).to have_content("Logged in as #{@regular_user.name}")
     expect(page).to have_content('Profile')
-    expect(page).to have_content('Log Out')
+    expect(page).to have_content('Logout')
     expect(page).to_not have_content('Login')
   end
 end
