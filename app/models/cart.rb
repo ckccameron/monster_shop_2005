@@ -6,6 +6,7 @@ class Cart
   end
 
   def add_item(item)
+    require "pry"; binding.pry
     @contents[item] = 0 if !@contents[item]
     @contents[item] += 1
   end
@@ -31,5 +32,5 @@ class Cart
       Item.find(item_id).price * quantity
     end
   end
-  
+
 end
