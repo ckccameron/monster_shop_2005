@@ -42,11 +42,14 @@ Rails.application.routes.draw do
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
 
+  get "/users", to: "users#index"
+
   namespace :merchant do
     get "/", to: "dashboard#index"
   end
 
   namespace :admin do
     get "/", to: "dashboard#index"
+    get "/users", to: "users#index"
   end
 end
