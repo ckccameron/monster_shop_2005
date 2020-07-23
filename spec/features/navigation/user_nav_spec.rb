@@ -23,5 +23,11 @@ RSpec.describe "user navigation" do
     fill_in :email, with: @user.email
     fill_in :password, with: @user.password
     click_on "Submit Information"
+
+    visit "/merchant"
+    expect(page).to have_content(" The page you were looking for doesn't exist (404)")
+
+    visit "/admin"
+    expect(page).to have_content(" The page you were looking for doesn't exist (404)")
   end
 end
