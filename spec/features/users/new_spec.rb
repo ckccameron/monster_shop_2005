@@ -23,7 +23,7 @@ RSpec.describe 'new user page', type: :feature do
       expect(page).to have_content('Email')
       expect(page).to have_content('Password')
       expect(page).to have_content('Confirm password')
-
+      
       fill_in 'Name', with: 'Neeru Eric'
       fill_in 'Address', with: '33 Chery St'
       fill_in 'City', with: 'Denver'
