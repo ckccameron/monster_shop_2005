@@ -16,6 +16,7 @@ RSpec.describe "Logging in to your account" do
 
     expect(current_path).to eq("/profile")
     expect(page).to have_content(("Logged in as #{@regular_user.name}"))
+
   end
 
   it "When a merchant user visits the login path they can enter information in to login and are directed to merchant dashboard" do
