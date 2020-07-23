@@ -35,7 +35,7 @@ RSpec.describe 'Site Navigation' do
   end
 
   describe 'As a merchant employee' do
-    it "displays nav bar with same links as a regular user including a link to merchant's dashboard" do
+    it 'displays nav bar with same links as a regular user including a link to merchant dashboard' do
       merchant = User.create(name: 'Ross Geller',
                             address: '33 Banana St',
                             city: 'New York',
@@ -50,10 +50,19 @@ RSpec.describe 'Site Navigation' do
       visit '/merchants'
 
       within 'nav' do
-        click_link 'Dashboard'
+        click_link 'Merchant Dashboard'
       end
 
       expect(current_path).to eq('/merchant')
+
+      # click_link 'Home'
+      # expect(current_path).to eq('/')
+      # click_link 'All Merchants'
+      # expect(current_path).to eq('/merchants')
+      # click_link 'All Items'
+      # expect(current_path).to eq('/items')
+      # click_link 'Log out'
+      # expect(current_path).to eq('/')
     end
   end
 end
