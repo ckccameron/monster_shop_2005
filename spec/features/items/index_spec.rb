@@ -198,8 +198,6 @@ RSpec.describe "Items Index Page" do
       item_order_8 = order_1.item_orders.create!(item: @pull_toy, price: @pull_toy.price, quantity: 1)
       item_order_9 = order_1.item_orders.create!(item: @scratch_pad, price: @scratch_pad.price, quantity: 2)
 
-
-
       visit '/items'
 
       expect(page).to have_content("Item Statistics:")
@@ -217,7 +215,8 @@ RSpec.describe "Items Index Page" do
         expect(page).to have_content("#{@pull_toy.name} - 1 units purchased")
         expect(page).to have_content("#{@scratch_pad.name} - 2 units purchased")
         expect(page).to have_content("#{@tire.name} - 6 units purchased")
-        expect(page).to have_content("#{@catnip.name} - 20 units purchased")
+        expect(page).to have_content("#{@catnip.name} - 50 units purchased")
+        save_and_open_page
       end
     end
   end
