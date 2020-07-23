@@ -12,7 +12,7 @@ RSpec.describe "Items Index Page" do
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
       @rmerchant_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
-      @merchant_user = User.create(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
+      @admin_user = User.create(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
       @admin_user = User.create(name: 'Napoleon Bonaparte', address: '33 Shorty Ave', city: 'Los Angeles', state: 'CA', zip: '12345', email: 'french_people_rule@turing.io', password: 'test125', role: 2)
     end
 
@@ -97,8 +97,44 @@ RSpec.describe "Items Index Page" do
 
     it "A merchant user can visit the page and see all items except disabled items" do
       visit '/login'
-      fill_in :email, with: @merchant_user.email
-      fill_in :password, with: @merchant_user.password
+      fill_in :email, with: @admin_user.email
+      fill_in :password, with: @admin_user.password
+      click_on "Submit Information"
+
+      visit items_path
+
+      within "#item-#{@tire.id}" do
+        expect(page).to have_link(@tire.name)
+        expect(page).to have_content(@tire.description)
+        expect(page).to have_content("Price: $#{@tire.price}")
+        expect(page).to have_content("Active")
+        expect(page).to have_content("Inventory: #{@tire.inventory}")
+        expect(page).to have_link(@meg.name)
+        expect(page).to have_css("img[src*='#{@tire.image}']")
+      end
+
+      within "#item-#{@pull_toy.id}" do
+        expect(page).to have_link(@pull_toy.name)
+        expect(page).to have_content(@pull_toy.description)
+        expect(page).to have_content("Price: $#{@pull_toy.price}")
+        expect(page).to have_content("Active")
+        expect(page).to have_content("Inventory: #{@pull_toy.inventory}")
+        expect(page).to have_link(@brian.name)
+        expect(page).to have_css("img[src*='#{@pull_toy.image}']")
+      end
+
+        expect(page).to_not have_link(@dog_bone.name)
+        expect(page).to_not have_content(@dog_bone.description)
+        expect(page).to_not have_content("Price: $#{@dog_bone.price}")
+        expect(page).to_not have_content("Inactive")
+        expect(page).to_not have_content("Inventory: #{@dog_bone.inventory}")
+        expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
+    end
+
+    it "A merchant user can visit the page and see all items except disabled items" do
+      visit '/login'
+      fill_in :email, with: @admin_user.email
+      fill_in :password, with: @admin_user.password
       click_on "Submit Information"
 
       visit items_path
