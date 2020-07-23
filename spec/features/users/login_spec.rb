@@ -49,4 +49,20 @@ RSpec.describe "Logging in to your account" do
     expect(current_path).to eq("/login")
     expect(page).to have_content("Sorry, your credentials are invalid")
   end
+
+  it "can see the same links as a visitor plus profile, logout, but not login" do
+    user_1 = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denvor', state: 'CA', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123')
+
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+    expect(page).to have_content('Logged in as Neeru Ericsson')
+    expect(page).to have_content('Profile')
+    expect(page).to have_content('Logout')
+    expect(page).to_not have_content('Login')
+  end
 end

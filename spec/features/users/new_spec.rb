@@ -82,4 +82,18 @@ RSpec.describe 'new user page', type: :feature do
 
     expect(page).to have_content("Email has already been taken")
   end
+  it "can see the same links as a visitor plus profile, logout, but not login" do
+    user_1 = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denvor', state: 'CA', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123')
+
+    visit '/login'
+
+    fill_in :email, with: 'neeru_is_cool@turing.io'
+    fill_in :password, with: 'test123'
+    click_on "Submit Information"
+
+    expect(page).to have_content('Logged in as Neeru Ericsson')
+    expect(page).to have_content('Profile')
+    expect(page).to have_content('Logout')
+    expect(page).to_not have_content('Login')
+  end
 end
