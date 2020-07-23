@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     user = User.create(user_params)
     if user.save
       redirect_to '/profile'
-      flash[:success] = "You are now registered and logged in"
+      flash[:success] = "Logged in as #{user.name}"
     else
       flash[:notice] = user.errors.full_messages.to_sentence
       redirect_to '/register'
