@@ -35,6 +35,7 @@ RSpec.describe "As a visitor" do
       pencil = mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       pulltoy = brian.items.create(name: "Pulltoy", description: "It'll never fall apart!", price: 14, image: "https://www.valupets.com/media/catalog/product/cache/1/image/650x/040ec09b1e35df139433887a97daa66f/l/a/large_rubber_dog_pull_toy.jpg", inventory: 7)
 
+      regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
 
       visit "/items/#{paper.id}"
       click_on "Add To Cart"
@@ -45,22 +46,23 @@ RSpec.describe "As a visitor" do
       visit "/items/#{pencil.id}"
       click_on "Add To Cart"
 
+      visit '/login'
+      fill_in :email, with: regular_user.email
+      fill_in :password, with: regular_user.password
+      click_on "Submit Information"
+
       visit "/cart"
       click_on "Checkout"
 
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
-
-      fill_in :name, with: name
-      fill_in :address, with: address
-      fill_in :city, with: city
-      fill_in :state, with: state
-      fill_in :zip, with: zip
+      fill_in :name, with: regular_user.name
+      fill_in :address, with: regular_user.address
+      fill_in :city, with: regular_user.city
+      fill_in :state, with: regular_user.state
+      fill_in :zip, with: regular_user.zip
 
       click_button "Create Order"
+      binding.pry
+
 
       visit "/merchants/#{meg.id}"
       expect(page).to_not have_link("Delete Merchant")
