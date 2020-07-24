@@ -66,7 +66,7 @@ RSpec.describe "As a registered user when I visit my profile page" do
 
     click_on "Edit Password"
 
-    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(current_path).to eq("/profile/password/edit")
 
     fill_in :password, with: "123test"
     fill_in :confirm_password, with: "123test"
@@ -76,7 +76,7 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(page).to have_content("Password updated successfully")
   end
 
-  xit "does not update password if both password and confirm_password fields are not matching" do
+  it "does not update password if password and confirm_password fields are not matching" do
     visit '/login'
 
     fill_in :email, with: @regular_user.email
@@ -87,17 +87,17 @@ RSpec.describe "As a registered user when I visit my profile page" do
 
     click_on "Edit Password"
 
-    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(current_path).to eq("/profile/password/edit")
 
     fill_in :password, with: "123test"
     fill_in :confirm_password, with: "123test123"
     click_on "Submit New Password"
 
-    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
-    expect(page).to have_content("Password update failed - password and password confirmation must match")
+    expect(current_path).to eq("/profile/password/edit")
+    expect(page).to have_content("Password update failed - password and password confirmation must be matching")
   end
 
-  xit "does not update password if either or both of password and confirm_password fields are blank" do
+  it "does not update password if either or both of password and confirm_password fields are blank" do
     visit '/login'
 
     fill_in :email, with: @regular_user.email
@@ -108,13 +108,13 @@ RSpec.describe "As a registered user when I visit my profile page" do
 
     click_on "Edit Password"
 
-    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(current_path).to eq("/profile/password/edit")
 
     fill_in :password, with: ""
     fill_in :confirm_password, with: ""
     click_on "Submit New Password"
 
-    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(current_path).to eq("/profile/password/edit")
     expect(page).to have_content("Password update failed - password and/or password confirmation cannot be blank")
   end
 end
