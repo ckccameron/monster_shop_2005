@@ -97,6 +97,34 @@ RSpec.describe 'Cart show' do
         expect(page).to_not have_link("Login")
       end
 
+      it "As a registered user when I add items and visit my cart I can check out and create an order" do
+        regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+        visit '/login'
+        fill_in :email, with: regular_user.email
+        fill_in :password, with: regular_user.password
+        click_on "Submit Information"
+
+        visit '/cart'
+        expect(page).to have_link("Check Out")
+        click_on "Check Out"
+        expect(current_path).to eq('/orders/new')
+
+        fill_in :name, with: regular_user.name
+        fill_in :address, with: regular_user.address
+        fill_in :city, with: regular_user.city
+        fill_in :state, with: regular_user.state
+        fill_in :zip, with: regular_user.zip
+
+        click_button "Create Order"
+
+        new_order = Order.last
+
+        
+
+
+      end
+
     end
   end
 end
