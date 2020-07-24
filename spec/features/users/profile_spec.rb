@@ -54,13 +54,67 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(page).to have_content("KY")
     expect(page).to_not have_content("CO")
   end
-end
 
-# When I click on the link to edit my profile data
-# I see a form like the registration page
-# The form is prepopulated with all my current information except my password
-# When I change any or all of that information
-# And I submit the form
-# Then I am returned to my profile page
-# And I see a flash message telling me that my data is updated
-# And I see my updated information
+  it "allows user to edit password" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+
+    fill_in :password, with: "123test"
+    fill_in :confirm_password, with: "123test"
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/profile")
+    expect(page).to have_content("Password updated successfully")
+  end
+
+  xit "does not update password if both password and confirm_password fields are not matching" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+
+    fill_in :password, with: "123test"
+    fill_in :confirm_password, with: "123test123"
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(page).to have_content("Password update failed - password and password confirmation must match")
+  end
+
+  xit "does not update password if either or both of password and confirm_password fields are blank" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+
+    fill_in :password, with: ""
+    fill_in :confirm_password, with: ""
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/password/#{@regular_user.id}/edit")
+    expect(page).to have_content("Password update failed - password and/or password confirmation cannot be blank")
+  end
+end
