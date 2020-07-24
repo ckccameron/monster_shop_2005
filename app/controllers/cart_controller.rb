@@ -23,5 +23,8 @@ class CartController < ApplicationController
     redirect_to '/cart'
   end
 
-
+  def update
+    cart.add_item(params[:item_id])
+    redirect_to '/cart'
+  end
 end

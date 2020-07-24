@@ -33,28 +33,17 @@ RSpec.describe 'Cart creation' do
       end
     end
     it "I can increment the count of items I want to purchase" do
-    # visit "/items/#{@paper.id}"
-    # click_on "Add To Cart"
 
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
 
       visit '/cart'
 
-      # within ".cart-item-#{@pencil.id}" do
-      click_button "+"
-      require "pry"; binding.pry
-      click_button "+"
-      click_button "+"
-      expect(page).to have_content("4")
-
-#       within ".cart-item-#{@paper.id}" do
-#         click_on "-"
-#         expect(page).to have_content("0")
-#       end
-#       Next to each item in my cart
-# I see a button or link to increment the count of items I want to purchase
-# I cannot increment the count beyond the item's inventory size
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      expect(page).to have_content("5")
     end
   end
 end
