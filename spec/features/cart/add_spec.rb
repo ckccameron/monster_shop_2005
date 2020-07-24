@@ -66,5 +66,20 @@ RSpec.describe 'Cart creation' do
       click_link "-"
       expect(page).to have_content("9")
     end
+    it "I can increment the count of items I want to purchase unless it is more than the inventory" do
+      mug = @mike.items.create(name: "Mug", description: "This mug is ugly and chipped", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 3)
+
+      visit "/items/#{mug.id}"
+      click_on "Add To Cart"
+
+      visit '/cart'
+
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      expect(page).to have_content("3")
+      click_link "+"
+      expect(page).to have_content("3")
+    end
   end
 end
