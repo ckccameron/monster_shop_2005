@@ -45,5 +45,24 @@ RSpec.describe 'Cart creation' do
       click_link "+"
       expect(page).to have_content("5")
     end
+    it "I can decrement the count of items I want to purchase" do
+
+      visit "/items/#{@pencil.id}"
+      click_on "Add To Cart"
+
+      visit '/cart'
+
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      expect(page).to have_content("5")
+
+      click_link "-"
+      click_link "-"
+      click_link "-"
+      click_link "-"
+      expect(page).to have_content("1")
+    end
   end
 end
