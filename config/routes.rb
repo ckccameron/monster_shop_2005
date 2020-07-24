@@ -47,6 +47,8 @@ Rails.application.routes.draw do
 
   get "/users", to: "users#index"
 
+  get "/password/:user_id/edit", to: "passwords#edit"
+
   namespace :merchant do
     get "/", to: "dashboard#index"
   end
