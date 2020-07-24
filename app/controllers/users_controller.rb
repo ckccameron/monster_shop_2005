@@ -25,10 +25,14 @@ class UsersController < ApplicationController
 
   def update
     user = User.find(session[:user_id])
-    user.update(user_params)
-    user.save
-    flash[:notice] = "Profile updated successfully"
-    redirect_to "/profile"
+    if user.update(user_params)
+      user.save
+      flash[:notice] = "Profile updated successfully"
+      redirect_to "/profile"
+    else
+      flash[:error] = user.errors.full_messages.to_sentence
+      redirect_to "/profile/edit"
+    end
   end
 
   private
