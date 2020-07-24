@@ -53,4 +53,8 @@ Rails.application.routes.draw do
     get "/", to: "dashboard#index"
     get "/users", to: "users#index"
   end
+
+  namespace :profile do
+    get "/orders", to: "orders#index"
+  end
 end

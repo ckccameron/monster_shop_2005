@@ -55,24 +55,11 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
-    end
-  end
-
-  describe "When I haven't added anything to my cart" do
-    describe "and visit my cart show page" do
-      it "I see a message saying my cart is empty" do
-        visit '/cart'
-        expect(page).to_not have_css(".cart-items")
-        expect(page).to have_content("Cart is currently empty")
-      end
-
-      it "I do NOT see the link to empty my cart" do
-        visit '/cart'
-        expect(page).to_not have_link("Empty Cart")
-      end
 
       it "Visitors must register or log in to check out" do
+
         visit '/cart'
+
         expect(page).to have_content("You must register or login to complete the checkout process")
         expect(page).to have_link("Register")
         expect(page).to have_link("Login")
@@ -81,7 +68,7 @@ RSpec.describe 'Cart show' do
         visit '/cart'
         click_on "Login"
         expect(current_path).to eq("/login")
-        expect(page).to_not have_content("Check Out")
+        expect(page).to_not have_content("Checkout")
       end
 
       it "Logged in users don't see text indicating they have to login" do
@@ -91,6 +78,13 @@ RSpec.describe 'Cart show' do
         fill_in :email, with: regular_user.email
         fill_in :password, with: regular_user.password
         click_on "Submit Information"
+
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@pencil.id}"
+        click_on "Add To Cart"
 
         visit '/cart'
         expect(page).to_not have_content("You must register or login to complete the checkout process")
@@ -106,9 +100,15 @@ RSpec.describe 'Cart show' do
         fill_in :password, with: regular_user.password
         click_on "Submit Information"
 
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@pencil.id}"
+        click_on "Add To Cart"
+
         visit '/cart'
-        expect(page).to have_link("Check Out")
-        click_on "Check Out"
+        click_on "Checkout"
         expect(current_path).to eq('/orders/new')
 
         fill_in :name, with: regular_user.name
@@ -121,11 +121,30 @@ RSpec.describe 'Cart show' do
 
         new_order = Order.last
 
+        expect(current_path).to eq('/profile/orders')
+        expect(page).to have_content("You have a new order!")
+        expect(page).to have_content(new_order.name)
+        expect(page).to have_content(@tire.name)
 
+        within 'nav' do
+          expect(page).to have_content("Cart: 0")
+        end
+      end
+    end
+  end
 
-
+  describe "When I haven't added anything to my cart" do
+    describe "and visit my cart show page" do
+      it "I see a message saying my cart is empty" do
+        visit '/cart'
+        expect(page).to_not have_css(".cart-items")
+        expect(page).to have_content("Cart is currently empty")
       end
 
+      it "I do NOT see the link to empty my cart" do
+        visit '/cart'
+        expect(page).to_not have_link("Empty Cart")
+      end
     end
   end
 end
