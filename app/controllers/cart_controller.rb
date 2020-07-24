@@ -29,6 +29,7 @@ class CartController < ApplicationController
       cart.add_item(params[:item_id]) unless item.inventory <= cart.contents[item.id.to_s]
     else
       cart.contents[item.id.to_s] -= 1
+      session[:cart].delete(params[:item_id]) if cart.contents[item.id.to_s] == 0
     end
     redirect_to '/cart'
   end
