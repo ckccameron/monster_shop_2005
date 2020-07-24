@@ -43,6 +43,7 @@ RSpec.describe 'Cart creation' do
 
       # within ".cart-item-#{@pencil.id}" do
       click_button "+"
+      require "pry"; binding.pry
       click_button "+"
       click_button "+"
       expect(page).to have_content("4")
