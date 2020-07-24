@@ -24,7 +24,12 @@ class CartController < ApplicationController
   end
 
   def update
-    cart.add_item(params[:item_id])
+    if params[:type] == "add"
+      cart.add_item(params[:item_id])
+    else
+      item = Item.find(params[:item_id])
+      cart.contents[item.id.to_s] -= 1
+    end
     redirect_to '/cart'
   end
 end
