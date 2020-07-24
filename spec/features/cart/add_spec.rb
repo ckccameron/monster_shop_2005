@@ -56,13 +56,15 @@ RSpec.describe 'Cart creation' do
       click_link "+"
       click_link "+"
       click_link "+"
-      expect(page).to have_content("5")
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      click_link "+"
+      expect(page).to have_content("10")
 
       click_link "-"
-      click_link "-"
-      click_link "-"
-      click_link "-"
-      expect(page).to have_content("1")
+      expect(page).to have_content("9")
     end
   end
 end
