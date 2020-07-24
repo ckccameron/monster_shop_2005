@@ -55,6 +55,33 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(page).to_not have_content("CO")
   end
 
+  it "does not allow user to update email to email address that's already in use" do
+    user_1 = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+    user_2 = User.create(name: 'Jessye Rameric', address: '44 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'dreamteam1234@turing.io', password: 'test123', role: 0)
+
+    visit '/login'
+
+    fill_in :email, with: user_2.email
+    fill_in :password, with: user_2.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Profile"
+
+    expect(current_path).to eq("/profile/edit")
+
+    fill_in :email, with: user_1.email
+
+    click_on "Submit Data"
+
+    expect(current_path).to eq("/profile/edit")
+    expect(page).to have_content("Email has already been taken")
+    expect(find_field(:name).value).to eq(user_2.name)
+    expect(find_field(:address).value).to eq(user_2.address)
+    expect(find_field(:city).value).to eq(user_2.city)
+  end
+
   it "allows user to edit password" do
     visit '/login'
 
