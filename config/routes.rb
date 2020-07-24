@@ -43,6 +43,9 @@ Rails.application.routes.draw do
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
+  get '/logout', to: "sessions#destroy"
+
+  get "/users", to: "users#index"
 
   namespace :merchant do
     get "/", to: "dashboard#index"
@@ -50,5 +53,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     get "/", to: "dashboard#index"
+    get "/users", to: "users#index"
   end
 end
