@@ -10,6 +10,7 @@ class OrdersController <ApplicationController
 
   def create
     order = Order.create(order_params)
+    order.status = "pending"
     if order.save
       cart.items.each do |item,quantity|
         order.item_orders.create({
