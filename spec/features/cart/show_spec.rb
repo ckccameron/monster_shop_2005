@@ -127,7 +127,7 @@ RSpec.describe 'Cart show' do
         expect(page).to have_content(@tire.name)
 
         within 'nav' do
-          expect(page).to have_content("Cart: 0")
+          expect(page).to_not have_content("Cart")
         end
       end
     end
