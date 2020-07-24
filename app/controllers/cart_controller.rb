@@ -24,10 +24,10 @@ class CartController < ApplicationController
   end
 
   def update
+    item = Item.find(params[:item_id])
     if params[:type] == "add"
-      cart.add_item(params[:item_id])
+      cart.add_item(params[:item_id]) unless item.inventory <= cart.contents[item.id.to_s]
     else
-      item = Item.find(params[:item_id])
       cart.contents[item.id.to_s] -= 1
     end
     redirect_to '/cart'
