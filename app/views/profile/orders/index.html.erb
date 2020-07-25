@@ -4,7 +4,7 @@
 <%= order.created_at %>
 <%= order.updated_at %>
 <%= order.status %>
-<%= order.items.count %>
+<%= order.total_items %>
 <p>Total: <%= order.grandtotal %></p>
 <%= link_to "View More Order Details", "/orders/#{order.id}" %>
 <% end %>

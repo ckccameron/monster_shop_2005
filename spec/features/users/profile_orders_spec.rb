@@ -41,7 +41,7 @@ RSpec.describe "As a registered user when I visit my profile/orders page" do
     expect(page).to have_content(@new_order.created_at)
     expect(page).to have_content(@new_order.updated_at)
     expect(page).to have_content(@new_order.status)
-    expect(page).to have_content(@new_order.items.count)
+    expect(page).to have_content(@new_order.total_items)
     expect(page).to have_content(@new_order.grandtotal)
   end
 end
