@@ -10,6 +10,10 @@ class Order <ApplicationRecord
   end
 
   def total_items
-    items.count
+    if status != "cancelled"
+      items.count
+    else
+      0
+    end
   end
 end

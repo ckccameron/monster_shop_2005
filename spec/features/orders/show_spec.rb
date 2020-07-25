@@ -36,7 +36,7 @@ RSpec.describe "User views an order show page" do
 
   it "When I visit my profile orders page I see a link for the order's show page" do
     visit '/profile/orders'
-    
+
     within ".orders-#{@new_order.id}" do
       click_on "View More Order Details"
     end
@@ -70,6 +70,45 @@ RSpec.describe "User views an order show page" do
       expect(page).to have_content(@tire.price)
       expect(page).to have_content("$100.00")
       expect(page).to have_content("1")
+    end
+  end
+
+  it "I see a link to cancel the order" do
+    visit "/profile/orders/#{@new_order.id}"
+    click_on "Cancel Order"
+    expect(current_path).to eq("/profile")
+
+    expect(page).to have_content("Order #{@new_order.id} has now been cancelled")
+    save_and_open_page
+
+    visit "/profile/orders/#{@new_order.id}"
+
+    within ".order-status" do
+      expect(page).to have_content("cancelled")
+    end
+
+    within "#item-name-#{@pencil.id}" do
+      expect(page).to have_content("UNFULFILLED")
+    end
+
+    within "#item-description-#{@pencil.id}" do
+      expect(page).to have_content("UNFULFILLED")
+    end
+
+    within "#item-price-#{@pencil.id}" do
+      expect(page).to have_content("UNFULFILLED")
+    end
+
+    within "#item-qty-#{@pencil.id}" do
+      expect(page).to have_content("UNFULFILLED")
+    end
+
+    within "#item-subtotal-#{@pencil.id}" do
+      expect(page).to have_content("UNFULFILLED")
+    end
+
+    within "#total-item-qty" do
+      expect(page).to have_content("0")
     end
   end
 end
