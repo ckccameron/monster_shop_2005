@@ -1,6 +1,6 @@
 <h1>Orders:</h1>
 <%= @user.orders.each do |order| %>
-<section class="order-<%= order.id %>">
+<section class="orders-<%= order.id %>">
 <h3>Order Details:</h3>
 <%= order.created_at %>
 <%= order.updated_at %>

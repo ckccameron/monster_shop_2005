@@ -36,8 +36,40 @@ RSpec.describe "User views an order show page" do
 
   it "When I visit my profile orders page I see a link for the order's show page" do
     visit '/profile/orders'
-    within ".orders-#{@new_order.id}"
-    click_on "View More Order Details"
+    
+    within ".orders-#{@new_order.id}" do
+      click_on "View More Order Details"
+    end
+
     expect(current_path).to eq("/profile/orders/#{@new_order.id}")
+  end
+
+  it "On the profile orders show page I see information about the order" do
+    visit "/profile/orders/#{@new_order.id}"
+
+    expect(page).to have_content(@new_order.id)
+    expect(page).to have_content(@new_order.created_at)
+    expect(page).to have_content(@new_order.updated_at)
+    expect(page).to have_content(@new_order.status)
+    expect(page).to have_content(@new_order.total_items)
+    expect(page).to have_content(@new_order.grandtotal)
+
+    within "#item-#{@pencil.id}" do
+      expect(page).to have_content(@pencil.name)
+      expect(page).to have_content(@pencil.description)
+      expect(page).to have_css("img[src*='#{@pencil.image}']")
+      expect(page).to have_content(@pencil.price)
+      expect(page).to have_content("$2.00")
+      expect(page).to have_content("1")
+    end
+
+    within "#item-#{@tire.id}" do
+      expect(page).to have_content(@tire.name)
+      expect(page).to have_content(@tire.description)
+      expect(page).to have_css("img[src*='#{@tire.image}']")
+      expect(page).to have_content(@tire.price)
+      expect(page).to have_content("$100.00")
+      expect(page).to have_content("1")
+    end
   end
 end
