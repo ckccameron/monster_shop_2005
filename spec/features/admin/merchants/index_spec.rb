@@ -67,4 +67,29 @@ RSpec.describe "Merchants index page" do
       expect(page).to have_content("Disable")
     end
   end
+
+  it "When I enable a merchant all of their items are activated" do
+    visit '/admin/merchants'
+
+    within ".merchant-#{@meg.id}" do
+      click_link "Disable"
+    end
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content("Enable")
+      click_link "Enable"
+    end
+
+    visit "/merchants/#{@meg.id}/items"
+
+    within "#item-#{@tire.id}" do
+      expect(page).to have_content(@tire.name)
+      expect(page).to have_content("Active")
+    end
+
+    within "#item-#{@shifter.id}" do
+      expect(page).to have_content(@shifter.name)
+      expect(page).to have_content("Active")
+    end
+  end
 end
