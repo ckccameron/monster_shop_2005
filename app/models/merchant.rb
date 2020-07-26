@@ -9,7 +9,6 @@ class Merchant <ApplicationRecord
                         :state,
                         :zip
 
-
   def no_orders?
     item_orders.empty?
   end
@@ -25,4 +24,13 @@ class Merchant <ApplicationRecord
   def distinct_cities
     item_orders.distinct.joins(:order).pluck(:city)
   end
+
+  def disable_all_items
+    items.update(:active? => false)
+  end
+
+  def enable_all_items
+    items.update(:active? => true)
+  end
+
 end
