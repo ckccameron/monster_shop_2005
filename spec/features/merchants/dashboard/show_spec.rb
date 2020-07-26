@@ -13,7 +13,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
     #   # @order_2 = Order.create(name: 'Bob', address: '456 Main St', city: 'Hershee', state: 'MA', zip: 00034)
     #   # @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
     #   # @item_order_2 = @order_2.item_orders.create!(item: @paper, price: @paper.price, quantity: 10)
-    # end
+    end
 
     describe 'When I visit my merchant dashboard ("/merchant")' do
       it 'I see the name and full address of the merchant I work for' do
