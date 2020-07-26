@@ -5,7 +5,9 @@ class Admin::MerchantsController < Admin::BaseController
 
   def update
     merchant = Merchant.find(params[:id])
-    binding.pry
+    merchant.status = "disabled"
+    merchant.save
     redirect_to "/admin/merchants"
+    flash[:message] = "#{merchant.name} is now disabled"
   end
 end
