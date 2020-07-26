@@ -38,12 +38,18 @@ Rails.application.routes.draw do
   get "/register", to: "users#new"
   post "/users", to: "users#create"
   get "/profile", to: "users#show"
+  get "/profile/edit", to: "users#edit"
+  patch "/profile", to: "users#update"
+  get "/profile/password/edit", to: "password#edit"
+  patch "/profile/password", to: "password#update"
 
   get "/login", to: "sessions#new"
   post "/login", to: "sessions#create"
   get '/logout', to: "sessions#destroy"
 
+
   get "/users", to: "users#index"
+
 
   namespace :merchant do
     get "/", to: "dashboard#index"

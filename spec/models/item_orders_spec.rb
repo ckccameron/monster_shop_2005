@@ -53,7 +53,7 @@ describe ItemOrder, type: :model do
       item_order_8 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
       item_order_9 = order_1.item_orders.create!(item: scratch_pad, price: scratch_pad.price, quantity: 2)
 
-      expect(ItemOrder.top_5_items).to eq([helmet, catnip, wheel, tire, scratch_pad, pull_toy])
+      expect(ItemOrder.top_5_items).to eq([helmet, catnip, wheel, tire, scratch_pad])
     end
 
     it 'bottom_5_items' do
@@ -84,7 +84,7 @@ describe ItemOrder, type: :model do
       item_order_8 = order_1.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 1)
       item_order_9 = order_1.item_orders.create!(item: scratch_pad, price: scratch_pad.price, quantity: 2)
 
-      expect(ItemOrder.bottom_5_items).to eq([pull_toy, scratch_pad, tire, wheel, catnip, helmet])
+      expect(ItemOrder.bottom_5_items).to eq([pull_toy, scratch_pad, tire, wheel, catnip])
     end
 
     it ".total_qty" do
