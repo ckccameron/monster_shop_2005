@@ -144,4 +144,19 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(current_path).to eq("/profile/password/edit")
     expect(page).to have_content("Password update failed - password and/or password confirmation cannot be blank")
   end
+  
+  it "If I have orders placed in the system I see a link called 'My Orders' which takes me to '/profile/orders'" do
+    visit '/login'
+    
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    
+    click_on "Submit Information"
+    
+    expect(current_path).to eq("/profile")
+    
+    click_on "My Orders"
+    
+    expect(current_path).to eq('/profile/orders')
+  end
 end

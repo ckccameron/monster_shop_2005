@@ -8,4 +8,12 @@ class Order <ApplicationRecord
   def grandtotal
     item_orders.sum('price * quantity')
   end
+
+  def total_items
+    if status != "cancelled"
+      items.count
+    else
+      0
+    end
+  end
 end
