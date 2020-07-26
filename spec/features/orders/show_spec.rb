@@ -79,8 +79,7 @@ RSpec.describe "User views an order show page" do
     expect(current_path).to eq("/profile")
 
     expect(page).to have_content("Order #{@new_order.id} has now been cancelled")
-    save_and_open_page
-
+    
     visit "/profile/orders/#{@new_order.id}"
 
     within ".order-status" do
