@@ -11,7 +11,6 @@
   <body>
     <nav class = "topnav">
       <%= link_to "Home", "/" %>
-      <%= link_to "Register", "/register" %>
       <%= link_to "All Merchants", "/merchants"%>
       <%= link_to "All Items", "/items"%>
 
@@ -30,6 +29,7 @@
       <% elsif current_user.nil? %>
         <%= link_to "Login", "/login" %>
         <%= link_to "Cart: #{cart.total_items}", "/cart" %>
+        <%= link_to "Register", "/register" %>
 
       <% else %>
         <%= link_to "Log Out", "/logout" %>

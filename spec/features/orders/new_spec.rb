@@ -1,3 +1,4 @@
+require 'pry'
 RSpec.describe("New Order Page") do
   describe "When I check out from my cart" do
     before(:each) do
@@ -16,7 +17,15 @@ RSpec.describe("New Order Page") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
     end
+
     it "I see all the information about my current cart" do
+      regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+      
+      visit '/login'
+      fill_in :email, with: regular_user.email
+      fill_in :password, with: regular_user.password
+      click_on "Submit Information"
+
       visit "/cart"
 
       click_on "Checkout"
@@ -49,6 +58,13 @@ RSpec.describe("New Order Page") do
     end
 
     it "I see a form where I can enter my shipping info" do
+      regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+      visit '/login'
+      fill_in :email, with: regular_user.email
+      fill_in :password, with: regular_user.password
+      click_on "Submit Information"
+
       visit "/cart"
       click_on "Checkout"
 

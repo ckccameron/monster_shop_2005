@@ -19,6 +19,13 @@ RSpec.describe 'Cart show' do
     end
 
     it 'Theres a link to checkout' do
+      regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+      visit '/login'
+      fill_in :email, with: regular_user.email
+      fill_in :password, with: regular_user.password
+      click_on "Submit Information"
+      
       visit "/cart"
 
       expect(page).to have_link("Checkout")

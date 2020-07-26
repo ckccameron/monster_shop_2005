@@ -1,4 +1,7 @@
 <h1>Cart</h1>
+<% if current_user.nil? %>
+<h2>You must register or login to complete the checkout process</h2>
+<% end %>
 
 <% if !@items.empty? %>
 <center>
