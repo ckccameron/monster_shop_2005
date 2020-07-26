@@ -376,7 +376,7 @@ When a user who is not a merchant nor an admin logs into the system, they are ta
 Admin users can access a namespaced route of "/admin/users" to see an index page  of all non-merchant/non-admin users, and from there see each user. This will allow the admin to perform every action on a user's account that the user themselves can perform. This functionality is taken care of in User Stories 53 & 54.
 
 ```
-[ ] done
+[X] done
 
 User Story 19, User Profile Show Page
 
@@ -387,7 +387,7 @@ And I see a link to edit my profile data
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 20, User Can Edit their Profile Data
 
@@ -405,7 +405,7 @@ And I see my updated information
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 21, User Can Edit their Password
 
@@ -421,7 +421,7 @@ And I see a flash message telling me that my password is updated
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 22, User Editing Profile Data must have unique Email address
 
@@ -442,7 +442,7 @@ This is what this app is all about: how a user can put things in a shopping cart
 Merchant Employees can order items in addition to regular users. Admin can not order items. This should already be taken care of through the navigation restrictions you set in User Stories 5 & 9. 
 
 ```
-[ ] done
+[X] done
 
 User Story 23, Adding Item Quantity to Cart
 
@@ -455,7 +455,7 @@ I cannot increment the count beyond the item's inventory size
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 24, Decreasing Item Quantity from Cart
 
@@ -468,7 +468,7 @@ If I decrement the count to 0 the item is immediately removed from my cart
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 25, Visitors must register or log in to check out
 
@@ -481,7 +481,7 @@ The words "log in" is a link to the login page
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 26, Registered users can check out
 
@@ -517,7 +517,7 @@ The show page template for an order can be shared between users, merchants and a
 - Admins can fulfill items on order on behalf of a merchant
 
 ```
-[ ] done
+[X] done
 
 User Story 27, User Profile displays Orders link
 
@@ -529,7 +529,7 @@ When I click this link my URI path is "/profile/orders"
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 28, User Profile displays Orders
 
@@ -545,7 +545,7 @@ I see every order I've made, which includes the following information:
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 29, User views an Order Show Page
 
@@ -564,7 +564,7 @@ I see all information about the order, including the following information:
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 30, User cancels an order
 
@@ -687,7 +687,7 @@ Then I see everything that merchant would see
 All users can see a merchant index page which will list some basic information about each merchant. When admins visit this page, however, more functionality is found, and it is found at the "/admin/merchants" route.
 
 ```
-[ ] done
+[X] done
 
 User Story 38, Admin disables a merchant account
 
@@ -700,7 +700,7 @@ And I see a flash message that the merchant's account is now disabled
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 39, Disabled Merchant Item's are inactive
 
@@ -711,7 +711,7 @@ Then all of that merchant's items should be deactivated
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 40, Admin enables a merchant account
 
@@ -724,7 +724,7 @@ And I see a flash message that the merchant's account is now enabled
 ```
 
 ```
-[ ] done
+[X] done
 
 User Story 41, Enabled Merchant Item's are active
 
