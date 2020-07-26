@@ -23,8 +23,7 @@ RSpec.describe "As a registered user when I visit my profile page" do
     expect(page).to have_content("Edit Profile")
   end
 
-  it "If I have orders placed in the system I see a link called 'My Orders' which takes me to '/profile/orders'" do
-
+  it "When I click the link to edit my profile data " do
     visit '/login'
 
     fill_in :email, with: @regular_user.email
@@ -33,8 +32,131 @@ RSpec.describe "As a registered user when I visit my profile page" do
 
     expect(current_path).to eq("/profile")
 
-    click_on "My Orders"
+    click_on "Edit Profile"
 
+    expect(current_path).to eq("/profile/edit")
+
+    expect(find_field(:name).value).to eq(@regular_user.name)
+    expect(find_field(:address).value).to eq(@regular_user.address)
+    expect(find_field(:city).value).to eq(@regular_user.city)
+    expect(find_field(:state).value).to eq(@regular_user.state)
+    expect(find_field(:zip).value).to eq(@regular_user.zip)
+    expect(find_field(:email).value).to eq(@regular_user.email)
+
+    fill_in :state, with: "KY"
+
+    click_button "Submit Data"
+
+    expect(current_path).to eq("/profile")
+
+    expect(page).to have_content("Profile updated successfully")
+
+    expect(page).to have_content("KY")
+    expect(page).to_not have_content("CO")
+  end
+
+  it "does not allow user to update email to email address that's already in use" do
+    user_1 = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+    user_2 = User.create(name: 'Jessye Rameric', address: '44 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'dreamteam1234@turing.io', password: 'test123', role: 0)
+
+    visit '/login'
+
+    fill_in :email, with: user_2.email
+    fill_in :password, with: user_2.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Profile"
+
+    expect(current_path).to eq("/profile/edit")
+
+    fill_in :email, with: user_1.email
+
+    click_on "Submit Data"
+
+    expect(current_path).to eq("/profile/edit")
+    expect(page).to have_content("Email has already been taken")
+    expect(find_field(:name).value).to eq(user_2.name)
+    expect(find_field(:address).value).to eq(user_2.address)
+    expect(find_field(:city).value).to eq(user_2.city)
+  end
+
+  it "allows user to edit password" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/profile/password/edit")
+
+    fill_in :password, with: "123test"
+    fill_in :confirm_password, with: "123test"
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/profile")
+    expect(page).to have_content("Password updated successfully")
+  end
+
+  it "does not update password if password and confirm_password fields are not matching" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/profile/password/edit")
+
+    fill_in :password, with: "123test"
+    fill_in :confirm_password, with: "123test123"
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/profile/password/edit")
+    expect(page).to have_content("Password update failed - password and password confirmation must be matching")
+  end
+
+  it "does not update password if either or both of password and confirm_password fields are blank" do
+    visit '/login'
+
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    click_on "Submit Information"
+
+    expect(current_path).to eq("/profile")
+
+    click_on "Edit Password"
+
+    expect(current_path).to eq("/profile/password/edit")
+
+    fill_in :password, with: ""
+    fill_in :confirm_password, with: ""
+    click_on "Submit New Password"
+
+    expect(current_path).to eq("/profile/password/edit")
+    expect(page).to have_content("Password update failed - password and/or password confirmation cannot be blank")
+  end
+  
+  it "If I have orders placed in the system I see a link called 'My Orders' which takes me to '/profile/orders'" do
+    visit '/login'
+    
+    fill_in :email, with: @regular_user.email
+    fill_in :password, with: @regular_user.password
+    
+    click_on "Submit Information"
+    
+    expect(current_path).to eq("/profile")
+    
+    click_on "My Orders"
+    
     expect(current_path).to eq('/profile/orders')
   end
 end
