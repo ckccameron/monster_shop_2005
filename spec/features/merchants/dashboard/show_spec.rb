@@ -24,9 +24,9 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
         click_on "Submit Information"
 
         expect(current_path).to eq("/merchant")
-
         expect(page).to have_content("Brian's Bike Shop")
-        expect(page).to have_content("123 Bike Rd.\nRichmond, VA 23137")
+        expect(page).to have_content("123 Bike Rd.")
+        expect(page).to have_content("Richmond VA 23137")
       end
       # describe 'If any users have pending orders containing items I sell' do
       #   it 'I see a list of these orders' do
