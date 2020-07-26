@@ -55,5 +55,26 @@ describe Merchant, type: :model do
       expect(@meg.distinct_cities).to include("Hershey")
     end
 
+    it "disable_items" do
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
+      tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
+
+      @meg.disable_all_items
+
+      expect(chain.active?).to eq(false)
+      expect(tire.active?).to eq(false)
+      end
+
+    it "enable_items" do
+      @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22, active?: false)
+      tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12, active?: false)
+
+      @meg.enable_all_items
+
+      expect(chain.active?).to eq(true)
+      expect(tire.active?).to eq(true)
+      end
+    end
   end
-end
