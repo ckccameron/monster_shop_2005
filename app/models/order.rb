@@ -16,4 +16,12 @@ class Order <ApplicationRecord
       0
     end
   end
+
+  def total_quantity
+    item_orders.inject(0) { |sum, item_order| sum + item_order.quantity }
+  end
+
+  def total_value
+    item_orders.inject(0) { |sum, item_order| sum + (item_order.quantity * item_order.price) }
+  end
 end

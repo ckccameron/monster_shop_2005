@@ -41,7 +41,7 @@ class SessionsController < ApplicationController
     @current_user = User.find(session[:user_id])
 
     if @current_user.role == "default"
-        redirect_to '/profile'
+      redirect_to '/profile'
     elsif @current_user.role == "merchant"
       redirect_to controller: 'merchant/dashboard', action: 'index', id: @current_user.id
     else @current_user.role == "admin"
