@@ -15,8 +15,8 @@ RSpec.describe "Items Index Page" do
       @scratch_pad = @brian.items.create(name: "Scratch Pad", description: "Pretty scratchy", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 5)
       @dog_bone = @brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
-      @rmerchant_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
-      @admin_user = User.create(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
+      @regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+      @merchant_user = User.create(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
       @admin_user = User.create(name: 'Napoleon Bonaparte', address: '33 Shorty Ave', city: 'Los Angeles', state: 'CA', zip: '12345', email: 'french_people_rule@turing.io', password: 'test125', role: 2)
     end
 
@@ -63,10 +63,10 @@ RSpec.describe "Items Index Page" do
         expect(page).to_not have_css("img[src*='#{@dog_bone.image}']")
     end
 
-    it "A rmerchant user can visit the page and see all items except disabled items" do
+    it "A regular_user user can visit the page and see all items except disabled items" do
       visit '/login'
-      fill_in :email, with: @rmerchant_user.email
-      fill_in :password, with: @rmerchant_user.password
+      fill_in :email, with: @regular_user.email
+      fill_in :password, with: @regular_user.password
       click_on "Submit Information"
 
       visit '/items'
@@ -101,8 +101,8 @@ RSpec.describe "Items Index Page" do
 
     it "A merchant user can visit the page and see all items except disabled items" do
       visit '/login'
-      fill_in :email, with: @admin_user.email
-      fill_in :password, with: @admin_user.password
+      fill_in :email, with: @merchant_user.email
+      fill_in :password, with: @merchant_user.password
       click_on "Submit Information"
 
       visit '/items'
@@ -184,9 +184,9 @@ RSpec.describe "Items Index Page" do
     end
 
     it "I see an area with statistics" do
-      order_1 = Order.create!(name: 'Mick Jagger', address: '123 Rock n Roll Ave', city: 'Los Angeles', state: 'CA', zip: 17033)
-      order_2 = Order.create!(name: 'Thom Yorke', address: '123 Karma Police Dr.', city: 'New York', state: 'NY', zip: 17033)
-      order_3 = Order.create!(name: 'Sid Vicious', address: '123 Sex Pistols Pl', city: 'Los Angeles', state: 'CA', zip: 17033)
+      order_1 = Order.create!(name: 'Mick Jagger', address: '123 Rock n Roll Ave', city: 'Los Angeles', state: 'CA', zip: 17033, user: @regular_user)
+      order_2 = Order.create!(name: 'Thom Yorke', address: '123 Karma Police Dr.', city: 'New York', state: 'NY', zip: 17033, user: @regular_user)
+      order_3 = Order.create!(name: 'Sid Vicious', address: '123 Sex Pistols Pl', city: 'Los Angeles', state: 'CA', zip: 17033, user: @regular_user)
 
       item_order_1 = order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 6)
       item_order_2 = order_2.item_orders.create!(item: @wheel, price: @wheel.price, quantity: 20)

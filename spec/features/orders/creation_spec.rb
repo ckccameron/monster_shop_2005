@@ -14,6 +14,7 @@ RSpec.describe("Order Creation") do
       @tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @mike.items.create(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @mike.items.create(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+      @regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
 
       visit "/items/#{@paper.id}"
       click_on "Add To Cart"
@@ -24,16 +25,21 @@ RSpec.describe("Order Creation") do
       visit "/items/#{@pencil.id}"
       click_on "Add To Cart"
 
+      visit '/login'
+      fill_in :email, with: @regular_user.email
+      fill_in :password, with: @regular_user.password
+      click_on "Submit Information"
+
       visit "/cart"
       click_on "Checkout"
     end
 
     it 'I can create a new order' do
-      name = "Bert"
-      address = "123 Sesame St."
-      city = "NYC"
-      state = "New York"
-      zip = 10001
+      name = @regular_user.name
+      address = @regular_user.address
+      city = @regular_user.city
+      state = @regular_user.state
+      zip = @regular_user.zip
 
       fill_in :name, with: name
       fill_in :address, with: address
@@ -44,6 +50,10 @@ RSpec.describe("Order Creation") do
       click_button "Create Order"
 
       new_order = Order.last
+
+      expect(current_path).to eq("/profile/orders")
+
+      click_on "View More Order Details"
 
       expect(current_path).to eq("/orders/#{new_order.id}")
 

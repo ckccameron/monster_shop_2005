@@ -55,8 +55,84 @@ RSpec.describe 'Cart show' do
 
         expect(page).to have_content("Total: $124")
       end
+
+      it "Visitors must register or log in to check out" do
+
+        visit '/cart'
+
+        expect(page).to have_content("You must register or login to complete the checkout process")
+        expect(page).to have_link("Register")
+        expect(page).to have_link("Login")
+        click_on "Register"
+        expect(current_path).to eq("/register")
+        visit '/cart'
+        click_on "Login"
+        expect(current_path).to eq("/login")
+        expect(page).to_not have_content("Checkout")
+      end
+
+      it "Logged in users don't see text indicating they have to login" do
+        regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+        visit '/login'
+        fill_in :email, with: regular_user.email
+        fill_in :password, with: regular_user.password
+        click_on "Submit Information"
+
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@pencil.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+        expect(page).to_not have_content("You must register or login to complete the checkout process")
+        expect(page).to_not have_link("Register")
+        expect(page).to_not have_link("Login")
+      end
+
+      it "As a registered user when I add items and visit my cart I can check out and create an order" do
+        regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+        visit '/login'
+        fill_in :email, with: regular_user.email
+        fill_in :password, with: regular_user.password
+        click_on "Submit Information"
+
+        visit "/items/#{@paper.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@tire.id}"
+        click_on "Add To Cart"
+        visit "/items/#{@pencil.id}"
+        click_on "Add To Cart"
+
+        visit '/cart'
+        click_on "Checkout"
+        expect(current_path).to eq('/orders/new')
+
+        fill_in :name, with: regular_user.name
+        fill_in :address, with: regular_user.address
+        fill_in :city, with: regular_user.city
+        fill_in :state, with: regular_user.state
+        fill_in :zip, with: regular_user.zip
+
+        click_button "Create Order"
+
+        new_order = Order.last
+
+        expect(current_path).to eq('/profile/orders')
+        expect(page).to have_content("You have a new order!")
+        expect(page).to have_content(new_order.name)
+        expect(page).to have_content(@tire.name)
+
+        within 'nav' do
+          expect(page).to_not have_content("Cart")
+        end
+      end
     end
   end
+
   describe "When I haven't added anything to my cart" do
     describe "and visit my cart show page" do
       it "I see a message saying my cart is empty" do
@@ -69,7 +145,6 @@ RSpec.describe 'Cart show' do
         visit '/cart'
         expect(page).to_not have_link("Empty Cart")
       end
-
     end
   end
 end
