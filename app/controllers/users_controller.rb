@@ -19,6 +19,22 @@ class UsersController < ApplicationController
     render file: "/public/404" if !current_user
   end
 
+  def edit
+    @user = User.find(session[:user_id])
+  end
+
+  def update
+    user = User.find(session[:user_id])
+    if user.update(user_params)
+      user.save
+      flash[:notice] = "Profile updated successfully"
+      redirect_to "/profile"
+    else
+      flash[:error] = user.errors.full_messages.to_sentence
+      redirect_to "/profile/edit"
+    end
+  end
+
   private
   def user_params
     params.permit(:name,
@@ -27,7 +43,6 @@ class UsersController < ApplicationController
                   :state,
                   :zip,
                   :email,
-                  :password,
-                  :role)
+                  :password)
   end
 end
