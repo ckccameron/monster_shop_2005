@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
         flash[:success] = "Logged in as #{@user.name}"
 
       elsif @user.role == "merchant"
-        redirect_to controller: 'merchant/dashboard', action: 'index', user_id: @user.id
+        redirect_to controller: 'merchant/dashboard', action: 'index', id: @user.id
         flash[:success] = "Logged in as #{@user.name}"
 
       else @user.role == "admin"
