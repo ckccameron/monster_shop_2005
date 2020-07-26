@@ -46,4 +46,25 @@ RSpec.describe "Merchants index page" do
       expect(page).to have_content("Inactive")
     end
   end
+
+  it "I can enable a disabled merchant" do
+    visit '/admin/merchants'
+
+    within ".merchant-#{@meg.id}" do
+      click_link "Disable"
+    end
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content("Enable")
+      click_link "Enable"
+    end
+
+    expect(current_path).to eq('/admin/merchants')
+    expect(page).to have_content("#{@meg.name} is now enabled")
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to_not have_content("Enable")
+      expect(page).to have_content("Disable")
+    end
+  end
 end
