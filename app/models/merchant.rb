@@ -24,11 +24,11 @@ class Merchant <ApplicationRecord
     item_orders.distinct.joins(:order).pluck(:city)
   end
 
-  def disable_items
+  def disable_all_items
     items.update(:active? => false)
   end
 
-  def enable_items
+  def enable_all_items
     items.update(:active? => true)
   end
 end

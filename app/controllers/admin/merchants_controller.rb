@@ -8,13 +8,13 @@ class Admin::MerchantsController < Admin::BaseController
     if merchant.status != "disabled"
       merchant.status = "disabled"
       merchant.save
-      merchant.disable_items
+      merchant.disable_all_items
       redirect_to "/admin/merchants"
       flash[:message] = "#{merchant.name} is now disabled"
     else merchant.status == "disabled"
       merchant.status = "enabled"
       merchant.save
-      merchant.enable_items
+      merchant.enable_all_items
       redirect_to "/admin/merchants"
       flash[:message] = "#{merchant.name} is now enabled"
     end

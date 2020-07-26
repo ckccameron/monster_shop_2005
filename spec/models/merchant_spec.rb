@@ -60,7 +60,7 @@ describe Merchant, type: :model do
       chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22)
       tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
 
-      @meg.disable_items
+      @meg.disable_all_items
 
       expect(chain.active?).to eq(false)
       expect(tire.active?).to eq(false)
@@ -71,7 +71,7 @@ describe Merchant, type: :model do
       chain = @meg.items.create(name: "Chain", description: "It'll never break!", price: 40, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 22, active?: false)
       tire = @meg.items.create(name: "Gatorskins", description: "They'll never pop!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12, active?: false)
 
-      @meg.enable_items
+      @meg.enable_all_items
 
       expect(chain.active?).to eq(true)
       expect(tire.active?).to eq(true)
