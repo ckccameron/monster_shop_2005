@@ -38,13 +38,13 @@ class SessionsController < ApplicationController
   private
 
   def redirect_to_path
-    current_user = User.find(session[:user_id])
+    @current_user = User.find(session[:user_id])
 
-    if current_user.role == "default"
-      redirect_to "/profile"
-    elsif current_user.role == "merchant"
-      redirect_to '/merchant'
-    else current_user.role == "admin"
+    if @current_user.role == "default"
+        redirect_to '/profile'
+    elsif @current_user.role == "merchant"
+      redirect_to controller: 'merchant/dashboard', action: 'index', id: @current_user.id
+    else @current_user.role == "admin"
       redirect_to '/admin'
     end
   end
