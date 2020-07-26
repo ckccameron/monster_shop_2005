@@ -4,6 +4,15 @@ class Profile::OrdersController < Profile::BaseController
   end
 
   def show
+    @order = Order.find(params[:id])
+  end
 
+  def update
+    order = Order.find(params[:id])
+    order.status = "cancelled"
+    order.save
+
+    redirect_to "/profile"
+    flash[:notice] = "Order #{order.id} has now been cancelled"
   end
 end
