@@ -4,7 +4,9 @@
   <% @merchants.each do |merchant|%>
     <section class = "merchant-<%= merchant.id %>">
       <h2><%=link_to merchant.name, "/merchants/#{merchant.id}"%></h2>
+      <% if merchant.status != "disabled" %>
       <button><%= link_to "Disable", "/admin/merchants/#{merchant.id}", method: :patch %></button>
+      <% end %>
     </section>
   <% end %>
 </section>
