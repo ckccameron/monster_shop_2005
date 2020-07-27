@@ -6,25 +6,22 @@ class SessionsController < ApplicationController
     end
   end
 
-
-
-
   def create
-    user = User.find_by(email: params[:email])
+    @user = User.find_by(email: params[:email])
 
-    if user.authenticate(params[:password])
-      session[:user_id] = user.id
-      if user.role == "default"
+    if @user.authenticate(params[:password])
+      session[:user_id] = @user.id
+      if @user.role == "default"
         redirect_to '/profile'
-        flash[:success] = "Logged in as #{user.name}"
+        flash[:success] = "Logged in as #{@user.name}"
 
-      elsif user.role == "merchant"
-        redirect_to '/merchant'
-        flash[:success] = "Logged in as #{user.name}"
+      elsif @user.role == "merchant"
+        redirect_to controller: 'merchant/dashboard', action: 'index', id: @user.id
+        flash[:success] = "Logged in as #{@user.name}"
 
-      else user.role == "admin"
+      else @user.role == "admin"
         redirect_to '/admin'
-        flash[:success] = "Logged in as #{user.name}"
+        flash[:success] = "Logged in as #{@user.name}"
       end
     else
       flash[:error] = "Sorry, your credentials are invalid"
@@ -41,13 +38,13 @@ class SessionsController < ApplicationController
   private
 
   def redirect_to_path
-    current_user = User.find(session[:user_id])
+    @current_user = User.find(session[:user_id])
 
-    if current_user.role == "default"
-      redirect_to "/profile"
-    elsif current_user.role == "merchant"
-      redirect_to '/merchant'
-    else current_user.role == "admin"
+    if @current_user.role == "default"
+      redirect_to '/profile'
+    elsif @current_user.role == "merchant"
+      redirect_to controller: 'merchant/dashboard', action: 'index', id: @current_user.id
+    else @current_user.role == "admin"
       redirect_to '/admin'
     end
   end
