@@ -41,7 +41,6 @@ describe ItemOrder, type: :model do
       scratch_pad = brian.items.create(name: "Scratch Pad", description: "Pretty scratchy", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 5)
       dog_bone = brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
-
       order_1 = Order.create!(name: 'Mick Jagger', address: '123 Rock n Roll Ave', city: 'Los Angeles', state: 'CA', zip: 17033, user: regular_user)
       order_2 = Order.create!(name: 'Thom Yorke', address: '123 Karma Police Dr.', city: 'New York', state: 'NY', zip: 17033, user: regular_user)
       order_3 = Order.create!(name: 'Sid Vicious', address: '123 Sex Pistols Pl', city: 'Los Angeles', state: 'CA', zip: 17033, user: regular_user)
@@ -73,7 +72,6 @@ describe ItemOrder, type: :model do
       scratch_pad = brian.items.create(name: "Scratch Pad", description: "Pretty scratchy", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 5)
       dog_bone = brian.items.create(name: "Dog Bone", description: "They'll love it!", price: 21, image: "https://img.chewy.com/is/image/catalog/54226_MAIN._AC_SL1500_V1534449573_.jpg", active?:false, inventory: 21)
 
-
       order_1 = Order.create!(name: 'Mick Jagger', address: '123 Rock n Roll Ave', city: 'Los Angeles', state: 'CA', zip: 17033, user: regular_user)
       order_2 = Order.create!(name: 'Thom Yorke', address: '123 Karma Police Dr.', city: 'New York', state: 'NY', zip: 17033, user: regular_user)
       order_3 = Order.create!(name: 'Sid Vicious', address: '123 Sex Pistols Pl', city: 'Los Angeles', state: 'CA', zip: 17033, user: regular_user)
@@ -103,7 +101,4 @@ describe ItemOrder, type: :model do
       expect(ItemOrder.total_qty_ordered(tire)).to eq(6)
     end
   end
-
-
-
 end

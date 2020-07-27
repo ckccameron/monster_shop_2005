@@ -15,7 +15,7 @@ describe Order, type: :model do
     it {should belong_to :user}
   end
 
-  describe 'instance methods' do
+  describe "instance methods" do
     before :each do
       @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
       @brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
@@ -37,6 +37,29 @@ describe Order, type: :model do
 
     it "total_items" do
       expect(@order_1.total_items).to eq(2)
+    end
+  end
+
+  describe "class methods" do
+    it ".status_packaged" do
+      regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123', role: 0)
+
+      meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
+      brian = Merchant.create(name: "Brian's Dog Shop", address: '125 Doggo St.', city: 'Denver', state: 'CO', zip: 80210)
+
+      helmet = meg.items.create(name: "Brain Cage", description: "A cage to protect your head", price: 150, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 70)
+      catnip = brian.items.create(name: "Catnip", description: "It'll get your cat super high", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 50)
+
+      order = Order.create!(name: 'Sid Vicious', address: '123 Sex Pistols Pl', city: 'Los Angeles', state: 'CA', zip: 17033, user: regular_user)
+
+      item_order_1 = order.item_orders.create!(item: helmet, price: helmet.price, quantity: 50)
+      item_order_2 = order.item_orders.create!(item: catnip, price: catnip.price, quantity: 10)
+
+      expect(order.status).to eq("pending")
+
+      order.status_packaged
+
+      expect(order.status).to eq("packaged")
     end
   end
 end
