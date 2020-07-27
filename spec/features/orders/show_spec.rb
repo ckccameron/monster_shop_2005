@@ -118,7 +118,9 @@ RSpec.describe "User views an order show page" do
     order.item_orders.create!(item: @pencil, price: @pencil.price, quantity: 3, status: "fulfilled")
     order.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "fulfilled")
 
+    order.status_packaged
+
     visit "/profile/orders/#{order.id}"
-    expect(page).to have_content("Current Status: packaged")
+    expect(page).to have_content("Order Status: packaged")
   end
 end
