@@ -16,4 +16,10 @@ class Order <ApplicationRecord
       0
     end
   end
+
+  def status_packaged
+    if item_orders.where(status: "UNFULFILLED") == []
+      self.update(status: "packaged")
+    end
+  end
 end
