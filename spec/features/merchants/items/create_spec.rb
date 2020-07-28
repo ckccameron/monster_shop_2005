@@ -34,20 +34,20 @@ RSpec.describe "A merchant can create a new item" do
 
     click_button "Create Item"
 
-    @new_item = Item.last
+    new_item = Item.last
 
     expect(current_path).to eq('/merchant/items')
 
-    expect(page).to have_content("#{@new_item.name} has been created")
+    expect(page).to have_content("#{new_item.name} has been created")
 
-    within ".items-#{@new_item.id}" do
+    within ".items-#{new_item.id}" do
 
-      expect(page).to have_content(@new_item.name)
-      expect(page).to have_content(@new_item.description)
-      expect(page).to have_content(@new_item.price)
+      expect(page).to have_content(new_item.name)
+      expect(page).to have_content(new_item.description)
+      expect(page).to have_content(new_item.price)
       expect(page).to have_content("Active")
-      expect(page).to have_content(@new_item.inventory)
-      expect(page).to have_content(@new_item.image)
+      expect(page).to have_content(new_item.inventory)
+      expect(page).to have_content(new_item.image)
     end
   end
 
@@ -69,12 +69,13 @@ RSpec.describe "A merchant can create a new item" do
       fill_in :inventory, with: @inventory
 
       click_button "Create Item"
-
+      save_and_open_page
       expect(current_path).to eq("/merchant/items/new")
       expect(page).to have_content("Description can't be blank")
       expect(page).to have_content(@name)
       expect(page).to have_content(@price)
       expect(page).to have_content(@inventory)
+
     end
   end
 end
