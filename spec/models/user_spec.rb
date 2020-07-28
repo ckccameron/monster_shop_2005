@@ -12,6 +12,11 @@ RSpec.describe User, type: :model do
     it { should validate_uniqueness_of :email }
   end
 
+  describe "relationships" do
+    it {should have_many :merchant_users}
+    it {should have_many(:merchants).through(:merchant_users)}
+  end
+
   describe "roles" do
     it "can be created as an admin user" do
       user = User.create(name: 'Napoleon Bonaparte', address: '33 Shorty Ave', city: 'Los Angeles', state: 'CA', zip: '12345', email: 'french_people_rule@turing.io', password: 'test125', role: 2)
