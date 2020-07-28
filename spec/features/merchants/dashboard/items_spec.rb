@@ -52,5 +52,25 @@ RSpec.describe 'merchant items page', type: :feature do
         expect(page).to have_link("Activate")
       end
     end
+    it 'I see a link or button to activate the item next to each item that is inactive' do
+      visit '/merchant/items'
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Active")
+        expect(page).to have_link("Deactivate")
+        click_on "Deactivate"
+      end
+
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Inactive")
+        expect(page).to have_link("Activate")
+        click_on "Activate"
+      end
+      expect(current_path).to eq("/merchant/items")
+
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Active")
+        expect(page).to have_link("Deactivate")
+      end
+    end
   end
 end
