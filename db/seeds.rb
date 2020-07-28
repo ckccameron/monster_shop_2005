@@ -26,3 +26,7 @@ merchant_user = User.create(name: 'Ross Geller', address: '33 Banana St', city: 
 MerchantUser.create(merchant: bike_shop, user: merchant_user)
 admin_user = User.create(name: 'Napoleon Bonaparte', address: '33 Shorty Ave', city: 'Los Angeles', state: 'CA', zip: '12345', email: 'french_people_rule@turing.io', password: 'test125', role: 2)
 regular_user = User.create(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', email: 'neeru_is_cool@turing.io', password: 'test123')
+
+#orders
+order_1 = Order.create!(name: 'Cam-Eric Ramessye', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', user: regular_user)
+item_order_1 = order_1.item_orders.create!(item: tire, price: tire.price, quantity: 2)
