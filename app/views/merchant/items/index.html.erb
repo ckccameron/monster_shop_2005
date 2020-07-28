@@ -15,14 +15,14 @@
     <% else %>
       <p>Status: Inactive</p>
     <% end %>
-    <% if item.no_orders? %>
-      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
-    <% end %>
     <p><%= item.inventory %></p>
     <% if item.active? %>
       <p><%= link_to "Deactivate", "/merchant/items/#{item.id}?type=deact", method: :patch %>
     <% else %>
       <p><%= link_to "Activate", "/merchant/items/#{item.id}?type=activ", method: :patch %>
+    <% end %>
+    <% if item.no_orders? %>
+      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
     <% end %>
   <% end %>
 </section>

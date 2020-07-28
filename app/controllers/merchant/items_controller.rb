@@ -23,7 +23,7 @@ class Merchant::ItemsController < Merchant::BaseController
       flash[:message] = "#{item.name} has been created"
     end
   end
-  
+
   def update
    item = Item.find(params[:item_id])
    if params[:type] == "deact"

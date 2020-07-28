@@ -40,14 +40,14 @@ RSpec.describe "A merchant can create a new item" do
 
     expect(page).to have_content("#{@new_item.name} has been created")
 
-    within "#item-#{@new_item.id}" do
+    within ".items-#{@new_item.id}" do
 
-      expect(page).to have_link(@new_item.name)
+      expect(page).to have_content(@new_item.name)
       expect(page).to have_content(@new_item.description)
-      expect(page).to have_content("Price: $#{@new_item.price}")
+      expect(page).to have_content(@new_item.price)
       expect(page).to have_content("Active")
-      expect(page).to have_content("Inventory: #{@new_item.inventory}")
-      expect(page).to have_css("img[src*='#{@new_item.image}']")
+      expect(page).to have_content(@new_item.inventory)
+      expect(page).to have_content(@new_item.image)
     end
   end
 end

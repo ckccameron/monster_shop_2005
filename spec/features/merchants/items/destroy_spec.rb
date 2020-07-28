@@ -20,10 +20,12 @@ RSpec.describe "A merchant can delete one of their items" do
     fill_in :password, with: @ross.password
     click_on "Submit Information"
   end
-  it "I can delete an item that has never been ordered" do
+
+  it "I can delete orders" do
+
     visit '/merchant/items'
 
-    within "#item-#{@chain.id}" do
+    within ".items-#{@chain.id}" do
       expect(page).to have_content("Delete Item")
       click_on "Delete Item"
     end
@@ -31,18 +33,11 @@ RSpec.describe "A merchant can delete one of their items" do
     expect(current_path).to eq("/merchant/items")
 
     expect(page).to have_content("#{@chain.name} has now been deleted")
+    save_and_open_page
 
-    expect(page).to_not have_content("Price: $#{@chain.price}")
-    expect(page).to_not have_css("img[src*='#{@chain.image}']")
-    expect(page).to_not have_content(@chain.description)
-    expect(page).to_not have_content("Inventory: #{@chain.inventory}")
-  end
-
-  it "I can't delete an item that has orders" do
-    visit '/merchant/items'
-
-    within "#item-#{@tire.id}" do
+    within ".items-#{@tire.id}" do
       expect(page).to_not have_content("Delete Item")
     end
+
   end
 end
