@@ -15,6 +15,9 @@
     <% else %>
       <p>Status: Inactive</p>
     <% end %>
+    <% if item.no_orders? %>
+      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
+    <% end %>
     <p><%= item.inventory %></p>
     <% if item.active? %>
       <p><%= link_to "Deactivate", "/merchant/items/#{item.id}?type=deact", method: :patch %>
@@ -23,3 +26,4 @@
     <% end %>
   <% end %>
 </section>
+<%= link_to "Add Item", "/merchant/items/new" %>
