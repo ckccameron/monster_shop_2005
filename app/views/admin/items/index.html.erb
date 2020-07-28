@@ -7,11 +7,9 @@
     <%= link_to "/items/#{item.id}"  do %>
     <img alt= 'image-<%=item.id%>' src= <%= item.image %>></img>
     <% end %>
-    <p> <%= item.description unless @merchant%> </p>
+    <p> <%= item.description %> </p>
     <p>Price: <%=number_to_currency(item.price) %> </p>
     <p>Inventory: <%= item.inventory %> </p>
-    <% if !@merchant %>
-    <% end %>
     <% if item.active? %>
       <p>Active</p>
     <% else %>
@@ -23,3 +21,4 @@
   </section>
   <% end %>
 </section>
+<%= link_to "Add Item", "/admin/merchants/#{@merchant.id}/items/new" %>

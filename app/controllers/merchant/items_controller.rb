@@ -12,6 +12,9 @@ class Merchant::ItemsController < Merchant::BaseController
     flash[:message] = "#{item.name} has now been deleted"
   end
 
+  def new
+  end
+
   def create
     merchant_user = User.find(session[:user_id])
     merchant = merchant_user.merchants.first
@@ -26,4 +29,5 @@ class Merchant::ItemsController < Merchant::BaseController
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
   end
+
 end

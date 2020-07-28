@@ -1,5 +1,5 @@
 require 'rails_helper'
-RSpec.describe "A merchant can delete one of their items" do
+RSpec.describe "A merchant can create a new item" do
   before(:each) do
     @meg = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
     @ross = User.create!(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
@@ -25,7 +25,7 @@ RSpec.describe "A merchant can delete one of their items" do
 
     click_on "Add Item"
 
-    expect(current_path).to eq('/merchant/items/new')
+    expect(current_path).to eq("/merchant/items/new")
 
     fill_in :name, with: @name
     fill_in :price, with: @price
