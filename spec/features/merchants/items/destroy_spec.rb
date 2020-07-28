@@ -36,13 +36,14 @@ RSpec.describe "A merchant can delete one of their items" do
     expect(page).to_not have_css("img[src*='#{@chain.image}']")
     expect(page).to_not have_content(@chain.description)
     expect(page).to_not have_content("Inventory: #{@chain.inventory}")
-  end
-
-  it "I can't delete an item that has orders" do
-    visit '/merchant/items'
 
     within "#item-#{@tire.id}" do
       expect(page).to_not have_content("Delete Item")
     end
   end
+
+  # it "I can't delete an item that has orders" do
+  #   visit '/merchant/items'
+  #
+  # end
 end
