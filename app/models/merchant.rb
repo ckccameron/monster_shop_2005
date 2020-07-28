@@ -35,4 +35,8 @@ class Merchant <ApplicationRecord
     items.update(:active? => true)
   end
 
+  def pending_orders
+    orders.where(status: "pending")
+  end
+
 end
