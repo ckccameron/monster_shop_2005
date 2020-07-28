@@ -1,26 +1,29 @@
-  <h1>All Items</h1>
-<section class="grid-container">
-  <% @items.each do |item| %>
-    <section class = "grid-item" id= 'item-<%=item.id%>'>
-      <h2> <%=link_to item.name, "/items/#{item.id}" %> </h2>
-      <p>Sold by: <%=link_to item.merchant.name, "/merchants/#{item.merchant.id}" %></p>
-      <%= link_to "/items/#{item.id}"  do %>
-      <img alt= 'image-<%=item.id%>' src= <%= item.image %>></img>
-      <% end %>
-      <p> <%= item.description unless @merchant%> </p>
-      <p>Price: <%=number_to_currency(item.price) %> </p>
-      <p>Inventory: <%= item.inventory %> </p>
-      <% if !@merchant %>
-      <% end %>
-      <% if item.active? %>
-        <p>Active</p>
-      <% else %>
-        <p>Inactive</p>
-      <% end %>
-      <% if item.no_orders? %>
-      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
-      <% end %>
-    </section>
+<h2>Items in <%= @merchant.name %></h2>
+<p><%= @merchant.address %></p>
+<p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
+<h3><%= link_to "View All Merchant Items", "/merchant/items" %></h3>
+<h3>All Pending Orders:</h3>
+<section class="all-orders">
+  <% @merchant.items.distinct.each do |item| %>
+  <section class = "items-<%= item.id %>">
+    <p><%= item.name %></p>
+    <p><%= item.description %></p>
+    <p><%= item.price %></p>
+    <p><%= item.image %></p>
+    <% if item.active? %>
+      <p>Status: Active</p>
+    <% else %>
+      <p>Status: Inactive</p>
     <% end %>
+    <% if item.no_orders? %>
+      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
+    <% end %>
+    <p><%= item.inventory %></p>
+    <% if item.active? %>
+      <p><%= link_to "Deactivate", "/merchant/items/#{item.id}?type=deact", method: :patch %>
+    <% else %>
+      <p><%= link_to "Activate", "/merchant/items/#{item.id}?type=activ", method: :patch %>
+    <% end %>
+  <% end %>
 </section>
 <%= link_to "Add Item", "/merchant/items/new" %>

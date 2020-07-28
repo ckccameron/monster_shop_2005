@@ -56,12 +56,14 @@ Rails.application.routes.draw do
     delete "/items/:id", to: "items#destroy"
     get "/items/new", to: "items#new"
     post "/items", to: "items#create"
+    patch "/items/:item_id", to: "items#update"
   end
 
   namespace :admin do
     get "/", to: "dashboard#index"
     get "/users", to: "users#index"
     get "/merchants", to: "merchants#index"
+    get "/merchants/:id", to: "merchants#show"
     patch "/merchants/:id", to: "merchants#update"
     get "/merchants/:id/items", to: "items#index"
     delete "/merchants/:merchant_id/items/:item_id", to: "items#destroy"

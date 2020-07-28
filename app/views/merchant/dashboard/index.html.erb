@@ -5,14 +5,14 @@
   <h2>Merchant: <%= @merchant.name %></h2>
   <p><%= @merchant.address %></p>
   <p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
-
+  <h3><%= link_to "View All Merchant Items", "/merchant/items" %></h3>
   <h3>All Pending Orders:</h3>
   <section class="pending-orders">
     <% @merchant.orders.distinct.each do |order| %>
-    <p><%= link_to "Order ID: #{order.id}", "/merchant/orders/#{order.id}" %></p>
-    <p>Order Date: <%= order.created_at %></p>
-    <p>Item Quantity: <%= order.total_quantity  %></p>
-    <p>Total Value: <%= order.total_value  %></p>
+      <p><%= link_to "Order ID: #{order.id}", "/merchant/orders/#{order.id}" %></p>
+      <p>Order Date: <%= order.created_at %></p>
+      <p>Item Quantity: <%= order.total_quantity  %></p>
+      <p>Total Value: <%= order.total_value  %></p>
     <% end %>
   </section>
 <% end %>

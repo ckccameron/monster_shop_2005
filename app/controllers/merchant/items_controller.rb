@@ -1,8 +1,7 @@
 class Merchant::ItemsController < Merchant::BaseController
   def index
     merchant_user = User.find(session[:user_id])
-    merchant = merchant_user.merchants.first
-    @items = merchant.items
+    @merchant = merchant_user.merchants.first
   end
 
   def destroy
@@ -24,10 +23,19 @@ class Merchant::ItemsController < Merchant::BaseController
       flash[:message] = "#{item.name} has been created"
     end
   end
+  
+  def update
+   item = Item.find(params[:item_id])
+   if params[:type] == "deact"
+    item.update(active?: false)
+   else
+    item.update(active?: true)
+   end
+    redirect_to '/merchant/items'
+  end
 
   private
   def item_params
     params.permit(:name,:description,:price,:inventory,:image)
   end
-
 end

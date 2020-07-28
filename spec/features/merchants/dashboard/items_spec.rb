@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard show page', type: :feature do
-  describe 'As a merchant employee' do
+RSpec.describe 'merchant items page', type: :feature do
+  describe 'As a merchant employee, when I visit my items page' do
     before :each do
       @ross = User.create!(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
       @cam = User.create!(name: 'Cam-Eric Ramessye', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_dope@turing.io', password: 'test124', role: 0)
@@ -21,55 +21,55 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       @item_order_2 = @order_1.item_orders.create!(item: @paper, price: @paper.price, quantity: 10)
       @item_order_3 = @order_3.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 2)
       @item_order_3 = @order_4.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 1)
+
+      visit '/login'
+
+      fill_in :email, with: @ross.email
+      fill_in :password, with: @ross.password
+      click_on "Submit Information"
     end
+    it 'I see all of my items: name, description, price, image, status, inventory' do
+      visit '/merchant/items'
 
-    describe 'When I visit my merchant dashboard ("/merchant")' do
-      it 'I see the name and full address of the merchant I work for' do
-        visit '/login'
+      expect(page).to have_content(@pencil.name)
+      expect(page).to have_content(@pencil.description)
+      expect(page).to have_content(@pencil.price)
+      expect(page).to have_content(@pencil.image)
+      expect(page).to have_content("Status: Active")
+      expect(page).to have_content(@pencil.inventory)
+    end
+    it 'I see a link or button to deactivate the item next to each item that is active' do
+      visit '/merchant/items'
 
-        fill_in :email, with: @ross.email
-        fill_in :password, with: @ross.password
-        click_on "Submit Information"
-
-        expect(current_path).to eq("/merchant")
-
-        expect(page).to have_content("Brian's Bike Shop")
-        expect(page).to have_content("123 Bike Rd.")
-        expect(page).to have_content("Richmond VA 23137")
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_link("Deactivate")
+        click_on "Deactivate"
       end
-      it 'I see a link to view my own items and when I click that link
-        my URI route should be "/merchant/items"' do
+      expect(current_path).to eq("/merchant/items")
 
-        visit '/login'
-
-        fill_in :email, with: @ross.email
-        fill_in :password, with: @ross.password
-        click_on "Submit Information"
-
-        expect(current_path).to eq("/merchant")
-        expect(page).to have_link("View All Merchant Items")
-
-        click_on "View All Merchant Items"
-        expect(current_path).to eq("/merchant/items")
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Inactive")
+        expect(page).to have_link("Activate")
       end
-      describe 'If any users have pending orders containing items I sell' do
-        it 'I see a list of these orders' do
-          visit '/login'
+    end
+    it 'I see a link or button to activate the item next to each item that is inactive' do
+      visit '/merchant/items'
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Active")
+        expect(page).to have_link("Deactivate")
+        click_on "Deactivate"
+      end
 
-          fill_in :email, with: @ross.email
-          fill_in :password, with: @ross.password
-          click_on "Submit Information"
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Inactive")
+        expect(page).to have_link("Activate")
+        click_on "Activate"
+      end
+      expect(current_path).to eq("/merchant/items")
 
-          expect(current_path).to eq("/merchant")
-
-          expect(page).to have_content("All Pending Orders:")
-          within ".pending-orders" do
-            expect(page).to have_content("Order ID: #{@order_1.id}")
-            expect(page).to have_content("Order Date: #{@order_1.created_at}")
-            expect(page).to have_content("Item Quantity: #{@order_1.total_quantity}")
-            expect(page).to have_content("Total Value: #{@order_1.total_value}")
-          end
-        end
+      within ".items-#{@pencil.id}" do
+        expect(page).to have_content("Status: Active")
+        expect(page).to have_link("Deactivate")
       end
     end
   end
