@@ -53,7 +53,9 @@ Rails.application.routes.draw do
   namespace :merchant do
     get "/", to: "dashboard#index"
     get "/items", to: "items#index"
+    delete "/items/:id", to: "items#destroy"
     get "/items/new", to: "items#new"
+    post "/items", to: "items#create"
   end
 
   namespace :admin do
@@ -61,6 +63,10 @@ Rails.application.routes.draw do
     get "/users", to: "users#index"
     get "/merchants", to: "merchants#index"
     patch "/merchants/:id", to: "merchants#update"
+    get "/merchants/:id/items", to: "items#index"
+    delete "/merchants/:merchant_id/items/:item_id", to: "items#destroy"
+    get "/merchants/:merchant_id/items/new", to: "items#new"
+    post "/merchants/:merchant_id/items/", to: "items#create"
   end
 
   namespace :profile do
