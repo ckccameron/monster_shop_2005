@@ -54,6 +54,8 @@ Rails.application.routes.draw do
     get "/", to: "dashboard#index"
     get "/items", to: "items#index"
     delete "/items/:id", to: "items#destroy"
+    get "/items/new", to: "items#new"
+    post "/items", to: "items#create"
   end
 
   namespace :admin do

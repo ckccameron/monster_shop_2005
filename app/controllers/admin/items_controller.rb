@@ -9,6 +9,5 @@ class Admin::ItemsController < Admin::BaseController
     item.destroy
     redirect_to "/admin/merchants/#{params[:merchant_id]}/items"
     flash[:message] = "#{item.name} has now been deleted"
-
   end
 end
