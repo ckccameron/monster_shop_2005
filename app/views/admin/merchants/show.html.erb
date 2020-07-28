@@ -5,7 +5,7 @@
 <h3>All Pending Orders:</h3>
 <section class="pending-orders">
   <% @merchant.orders.distinct.each do |order| %>
-  <p><%= link_to "Order ID: #{order.id}", "/merchant/orders/#{order.id}" %></p>
+  <p>Order ID: <%= order.id %></p>
   <p>Order Date: <%= order.created_at %></p>
   <p>Item Quantity: <%= order.total_quantity  %></p>
   <p>Total Value: <%= order.total_value  %></p>
