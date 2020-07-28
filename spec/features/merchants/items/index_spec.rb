@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'merchant dashboard show page', type: :feature do
+RSpec.describe 'merchant items index page', type: :feature do
   describe 'As a merchant employee' do
     before :each do
       @ross = User.create!(name: 'Ross Geller', address: '33 Banana St', city: 'New York', state: 'NY', zip: '12345', email: 'dinosaurs_are_cool@turing.io', password: 'test124', role: 1)
@@ -13,6 +13,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       @octopus = @little_shop.items.create!(name: "Octopus", description: "Inky!", price: 100, image: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588", inventory: 12)
       @paper = @bike_shop.items.create!(name: "Lined Paper", description: "Great for writing on!", price: 20, image: "https://cdn.vertex42.com/WordTemplates/images/printable-lined-paper-wide-ruled.png", inventory: 3)
       @pencil = @bike_shop.items.create!(name: "Yellow Pencil", description: "You can write on paper with it!", price: 2, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
+      @bike_pump = (name: "Hand Pump", description: "it's the pumpiest!", price: 12, image: "https://images-na.ssl-images-amazon.com/images/I/31BlVr01izL._SX425_.jpg", inventory: 100)
       @order_1 = Order.create!(name: 'Cam-Eric Ramessye', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', user: @cam)
       @order_2 = Order.create!(name: 'Cam-Eric Ramessye', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', user: @cam)
       @order_3 = Order.create!(name: 'Jim', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', user: @jim)
@@ -23,45 +24,43 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       @item_order_3 = @order_4.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 1)
     end
 
-    describe 'When I visit my merchant dashboard ("/merchant")' do
-      it 'I see the name and full address of the merchant I work for' do
+    describe "When I try to add a new item If any of my data is incorrect or missing (except image)" do
+      it "Then I am returned to the form, I see one or more flash messages indicating each error I caused, and All fields are re-populated with my previous data" do
+
         visit '/login'
 
         fill_in :email, with: @ross.email
         fill_in :password, with: @ross.password
         click_on "Submit Information"
 
-        expect(current_path).to eq("/merchant")
+        visit "/merchant/items"
 
-        expect(page).to have_content("Brian's Bike Shop")
-        expect(page).to have_content("123 Bike Rd.")
-        expect(page).to have_content("Richmond VA 23137")
-      end
-      describe 'If any users have pending orders containing items I sell' do
-        it 'I see a list of these orders' do
-          visit '/login'
+        expect(page).to have_link("Add Item")
 
-          fill_in :email, with: @ross.email
-          fill_in :password, with: @ross.password
-          click_on "Submit Information"
+        click_on "Add Item"
 
-          expect(current_path).to eq("/merchant")
+        expect(current_path).to eq("/merchant/items/new")
 
-          expect(page).to have_content("All Pending Orders:")
-          within ".pending-orders" do
-            expect(page).to have_content("Order ID: #{@order_1.id}")
-            expect(page).to have_content("Order Date: #{@order_1.created_at}")
-            expect(page).to have_content("Item Quantity: #{@order_1.total_quantity}")
-            expect(page).to have_content("Total Value: #{@order_1.total_value}")
-          end
+        fill_in :name, with: @bike_pump.name
+        fill_in :price, with: @bike_pump.price
+        fill_in :description, with: @bike_pump.description
+        fill_in :inventory, with: @bike_pump.inventory
+
+        click_on "Create Item"
+
+        expect(current_path).to eq("/merchant/items")
+
+        within "#item-#{@bike_pump.id}" do
+          expect(page).to have_link(@bike_pump.name)
+          expect(page).to have_content(@bike_pump.description)
+          expect(page).to have_content("Price: $#{@bike_pump.price}")
+          expect(page).to have_content("Active")
+          expect(page).to have_content("Inventory: #{@bike_pump.inventory}")
+          expect(page).to have_css("img[src*='#{@bike_pump.image}']")
         end
+
+        expect(page).to have_content("New Item Saved!")
       end
     end
-#     Each order listed includes the following information:
-# - the ID of the order, which is a link to the order show
-# page ("/merchant/orders/15")
-# - the date the order was made
-# - the total quantity of my items in the order
-# - the total value of my items for that order
   end
 end
