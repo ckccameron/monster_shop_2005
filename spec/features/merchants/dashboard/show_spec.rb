@@ -32,10 +32,25 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
         click_on "Submit Information"
 
         expect(current_path).to eq("/merchant")
-        save_and_open_page
+
         expect(page).to have_content("Brian's Bike Shop")
         expect(page).to have_content("123 Bike Rd.")
         expect(page).to have_content("Richmond VA 23137")
+      end
+      it 'I see a link to view my own items and when I click that link
+        my URI route should be "/merchant/items"' do
+
+        visit '/login'
+
+        fill_in :email, with: @ross.email
+        fill_in :password, with: @ross.password
+        click_on "Submit Information"
+
+        expect(current_path).to eq("/merchant")
+        expect(page).to have_link("View All Merchant Items")
+
+        click_on "View All Merchant Items"
+        expect(current_path).to eq("/merchant/items")
       end
       describe 'If any users have pending orders containing items I sell' do
         it 'I see a list of these orders' do
@@ -57,11 +72,5 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
         end
       end
     end
-#     Each order listed includes the following information:
-# - the ID of the order, which is a link to the order show
-# page ("/merchant/orders/15")
-# - the date the order was made
-# - the total quantity of my items in the order
-# - the total value of my items for that order
   end
 end

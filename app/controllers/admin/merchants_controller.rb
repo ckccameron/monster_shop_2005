@@ -19,4 +19,8 @@ class Admin::MerchantsController < Admin::BaseController
       flash[:message] = "#{merchant.name} is now enabled"
     end
   end
+
+  def show
+    @merchant = Merchant.find(params[:id])
+  end
 end

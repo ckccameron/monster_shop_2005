@@ -7,8 +7,8 @@ class ItemsController<ApplicationController
     else
       @items = Item.where(active?: true)
     end
-      @top_5 = ItemOrder.top_5_items
-      @bottom_5 = ItemOrder.bottom_5_items
+    @top_5 = ItemOrder.top_5_items
+    @bottom_5 = ItemOrder.bottom_5_items
   end
 
   def show

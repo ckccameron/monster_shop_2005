@@ -92,4 +92,16 @@ RSpec.describe "Merchants index page" do
       expect(page).to have_content("Active")
     end
   end
+  it "I click on a merchant's name,
+    Then my URI route should be ('/admin/merchants/6')
+    Then I see everything that merchant would see" do
+
+    visit '/admin/merchants'
+
+    within ".merchant-#{@meg.id}" do
+      click_link "#{@meg.name}"
+    end
+
+    expect(current_path).to eq("/admin/merchants/#{@meg.id}")
+  end
 end
