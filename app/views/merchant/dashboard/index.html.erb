@@ -11,7 +11,7 @@
     <% if @merchant.pending_orders.empty? %>
       <p>No Orders<p>
     <% else %>
-    <%= @merchant.pending_orders.each do |order| %>
+    <% @merchant.pending_orders.each do |order| %>
       <p><%= link_to "Order ID: #{order.id}", "/merchant/orders/#{order.id}" %></p>
       <p>Order Date: <%= order.created_at %></p>
       <p>Item Quantity: <%= order.total_quantity  %></p>
