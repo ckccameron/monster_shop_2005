@@ -23,7 +23,7 @@ class Merchant::ItemsController < Merchant::BaseController
       flash[:message] = "#{@item.name} has been created"
     else
       flash[:error] = @item.errors.full_messages.to_sentence
-      redirect_to "/merchant/items/new"
+      render :new
     end
   end
 
