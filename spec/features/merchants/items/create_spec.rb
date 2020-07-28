@@ -52,7 +52,7 @@ RSpec.describe "A merchant can create a new item" do
   end
 
   describe "When I try to add a new item If any of my data is incorrect or missing (except image)" do
-    xit "Then I am returned to the form I see one or more flash messages indicating each error I caused and all fields are re-populated with my previous data" do
+    it "Then I am returned to the form I see one or more flash messages indicating each error I caused and all fields are re-populated with my previous data" do
 
       visit '/login'
 
