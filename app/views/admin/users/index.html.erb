@@ -1,1 +1,19 @@
 <h1>All Users:</h1>
+<% @users.each do |user| %>
+<section class="user_id-<%= user.id %>">
+  <table>
+    <th>Name:</th>
+    <th>Date Registered:</th>
+    <th>Type of User:</th>
+    <tr>
+      <p><%= link_to "#{user.name}" %></p>
+    </tr>
+    <tr>
+      <p><%= user.created_at %></p>
+    </tr>
+    <tr>
+      <p><%= user.role %></p>
+    </tr>
+  </table>
+</section>
+<% end %>

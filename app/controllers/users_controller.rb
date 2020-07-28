@@ -9,8 +9,8 @@ class UsersController < ApplicationController
       redirect_to '/profile'
       flash[:success] = "Logged in as #{user.name}"
     else
-      flash[:notice] = user.errors.full_messages.to_sentence
-      redirect_to '/register'
+      flash[:error] = user.errors.full_messages.to_sentence
+      redirect_to "/register"
     end
   end
 
