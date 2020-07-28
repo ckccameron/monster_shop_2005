@@ -14,10 +14,10 @@ Rails.application.routes.draw do
   get "/items/:id", to: "items#show"
   get "/items/:id/edit", to: "items#edit"
   patch "/items/:id", to: "items#update"
-  get "/merchants/:merchant_id/items", to: "items#index"
+  # get "/merchants/:merchant_id/items", to: "items#index"
   get "/merchants/:merchant_id/items/new", to: "items#new"
   post "/merchants/:merchant_id/items", to: "items#create"
-  delete "/items/:id", to: "items#destroy"
+  # delete "/items/:id", to: "items#destroy"
 
   get "/items/:item_id/reviews/new", to: "reviews#new"
   post "/items/:item_id/reviews", to: "reviews#create"
@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     get "/users", to: "users#index"
     get "/merchants", to: "merchants#index"
     patch "/merchants/:id", to: "merchants#update"
+    get "/merchants/:id/items", to: "items#index"
+    delete "/merchants/:merchant_id/items/:item_id", to: "items#destroy"
   end
 
   namespace :profile do

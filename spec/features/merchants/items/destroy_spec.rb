@@ -19,7 +19,6 @@ RSpec.describe "A merchant can delete one of their items" do
     fill_in :email, with: @ross.email
     fill_in :password, with: @ross.password
     click_on "Submit Information"
-
   end
   it "I can delete an item that has never been ordered" do
     visit '/merchant/items'
