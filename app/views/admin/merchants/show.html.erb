@@ -1,7 +1,7 @@
 <h2>Merchant: <%= @merchant.name %></h2>
 <p><%= @merchant.address %></p>
 <p><%= @merchant.city %> <%= @merchant.state %> <%= @merchant.zip %></p>
-<h3><%= link_to "View All Merchant Items", "/merchant/items" %></h3>
+<h3><%= link_to "View All Merchant Items", "/admin/merchants/#{@merchant.id}/items" %></h3>
 <h3>All Pending Orders:</h3>
 <section class="pending-orders">
   <% @merchant.orders.distinct.each do |order| %>
