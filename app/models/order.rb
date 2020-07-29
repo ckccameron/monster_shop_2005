@@ -5,6 +5,8 @@ class Order < ApplicationRecord
   has_many :items, through: :item_orders
   belongs_to :user
 
+  enum status: %w(packaged pending shipped cancelled)
+
   def grandtotal
     item_orders.sum('price * quantity')
   end
@@ -18,8 +20,12 @@ class Order < ApplicationRecord
   end
 
   def status_packaged
-    if item_orders.where(status: "UNFULFILLED") == []
+    if item_orders.where(status: "UNFULFILLED")
       self.update(status: "packaged")
     end
+  end
+
+  def self.packaged_orders
+    Order.where(status: "packaged")
   end
 end
