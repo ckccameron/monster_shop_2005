@@ -6,7 +6,7 @@
     <th>Date Registered:</th>
     <th>Type of User:</th>
     <tr>
-      <p><%= link_to "#{user.name}" %></p>
+      <p><%= link_to "#{user.name}", "/admin/users/#{user.id}" %></p>
     </tr>
     <tr>
       <p><%= user.created_at %></p>

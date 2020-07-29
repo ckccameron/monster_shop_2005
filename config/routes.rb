@@ -69,6 +69,7 @@ Rails.application.routes.draw do
     delete "/merchants/:merchant_id/items/:item_id", to: "items#destroy"
     get "/merchants/:merchant_id/items/new", to: "items#new"
     post "/merchants/:merchant_id/items/", to: "items#create"
+    get "/users/:id", to: "users#show"
   end
 
   namespace :profile do
