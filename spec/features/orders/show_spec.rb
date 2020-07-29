@@ -114,9 +114,9 @@ RSpec.describe "User views an order show page" do
   it "changes order status from pending to packaged when all order items are fulfilled" do
     order = Order.create!(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', user_id: @regular_user.id, status: "pending")
 
-    order.item_orders.create!(item: @paper, price: @paper.price, quantity: 10, status: "fulfilled")
-    order.item_orders.create!(item: @pencil, price: @pencil.price, quantity: 3, status: "fulfilled")
-    order.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "fulfilled")
+    order.item_orders.create!(item: @paper, price: @paper.price, quantity: 10, status: "FULFILLED")
+    order.item_orders.create!(item: @pencil, price: @pencil.price, quantity: 3, status: "FULFILLED")
+    order.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "FULFILLED")
 
     order.status_packaged
 
