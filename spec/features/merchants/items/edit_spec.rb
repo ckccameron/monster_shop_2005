@@ -75,20 +75,19 @@ RSpec.describe "As a merchant employee" do
     expect(find_field('Inventory').value).to eq '12'
 
     fill_in 'Name', with: "GatorSkins"
-    fill_in 'Price', with: ""
+    fill_in 'Price', with: -1237134735087214659
     fill_in 'Description', with: "They're a bit more expensive, and they kinda do pop sometimes, but whatevs.. this is retail."
     fill_in 'Image', with: "https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588"
     fill_in 'Inventory', with: 130
     click_button "Update Item"
 
     expect(current_path).to eq("/merchant/items/#{tire.id}/edit")
-    expect(page).to have_content("Price can't be blank")
+
+    expect(page).to have_content("Price must be greater than 0")
 
     expect(find_field('Name').value).to eq "Gatorskins"
-    expect(find_field('Description').value).to eq "They're a bit more expensive, and they kinda do pop sometimes, but whatevs.. this is retail."
+    expect(find_field('Description').value).to eq "They'll never pop!"
     expect(find_field('Image').value).to eq("https://www.rei.com/media/4e1f5b05-27ef-4267-bb9a-14e35935f218?size=784x588")
-    expect(find_field('Inventory').value).to eq '130'
+    expect(find_field('Inventory').value).to eq '12'
   end
 end
-
-# All fields are re-populated with my previous data

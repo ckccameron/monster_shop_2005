@@ -28,21 +28,24 @@ class Merchant::ItemsController < Merchant::BaseController
   end
 
   def update
-   item = Item.find(params[:item_id])
+   @item = Item.find(params[:item_id])
+   @item.update(item_params)
    # if params[:type] == "deact"
-   #  item.update(active?: false)
+   #  @item.update(active?: false)
    # else
-   #  item.update(active?: true)
+   #  @item.update(active?: true)
    # end
-   item.update(item_params)
-    redirect_to '/merchant/items'
+   if @item.save
+     redirect_to '/merchant/items'
+     flash[:message] = "Item Updated"
+   else
+     redirect_to "/merchant/items/#{@item.id}/edit"
+     flash[:error] = @item.errors.full_messages.to_sentence
+   end
   end
 
   def edit
     @item = Item.find(params[:item_id])
-    if @item.save
-      flash[:message] = "Item Updated"
-    end
   end
 
   private
