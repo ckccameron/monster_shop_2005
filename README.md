@@ -83,10 +83,10 @@ class Order < ApplicationRecord
 ```
 
 **Contributors**
-Cam Chery - @ckccameron
-Jessye Ejdelman - @ejdelsztejn
-Eric Hale - @ehale64
-Neeru Ram - @neeruram1
+- Cam Chery - @ckccameron
+- Jessye Ejdelman - @ejdelsztejn
+- Eric Hale - @ehale64
+- Neeru Ram - @neeruram1
 
 **Acknowledgments**
 Our instructors during Module 2 at Turing School:
