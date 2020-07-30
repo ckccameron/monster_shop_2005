@@ -7,8 +7,9 @@
   <p><%= @order.city %>, <%= @order.state %>, <%= @order.zip %></p>
 </section>
 <br>
-<section class="order-items">
-  <% @order.items.where(id: @merchant.items.pluck(:id)).each do |item| %>
+
+<% @order.items.where(id: @merchant.items.pluck(:id)).each do |item| %>
+  <section class=<%= "order-items-#{item.id}" %>>
     <br>
     <h4>Item Info</h4>
     <p><%= link_to "#{item.name}", "/items/#{item.id}" %></p>
@@ -17,5 +18,5 @@
     <p><%= item_order.price %></p>
     <p><%= item_order.quantity %></p>
     <br>
-  <% end %>
-</section>
+  </section>
+<% end %>

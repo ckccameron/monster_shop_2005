@@ -43,15 +43,14 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       it 'I only see the items in the order that are being purchased from my merchant and not from another merchant' do
         visit "/merchant/orders/#{@order_1.id}"
 
-        within ".order-items" do
-          expect(page).to have_content(@tire.name)
-          expect(page).to_not have_content(@octopus.name)
-        end
+
+        expect(page).to have_content(@tire.name)
+        expect(page).to_not have_content(@octopus.name)
       end
       it 'For each item, I see the 1. item name which is a link to the item show page, 2. item image, 3. price for item, 4. item order quantity' do
         visit "/merchant/orders/#{@order_1.id}"
 
-        within ".order-items" do
+        within ".order-items-#{@tire.id}" do
           expect(page).to have_link(@tire.name)
           expect(page).to have_selector("img[src$='#{@tire.image}']")
           expect(page).to have_content(@item_order_1.price)
@@ -61,6 +60,29 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
           expect(current_path).to eq("/items/#{@tire.id}")
         end
       end
+      describe "If the user's desired quantity of an item is equal to or less than my current inventory quantity for that item and I have not already fulfilled that item" do
+        it 'Then I see a button or link to "fulfill" that item' do
+          visit "/merchant/orders/#{@order_1.id}"
+
+          within ".order-items-#{@tire.id}" do
+            expect(page).to have_link("Fulfill Item")
+          end
+        end
+      end
+
+# than my current inventory quantity for that item
+# And I have not already "fulfilled" that item:
+# - Then I see a button or link to "fulfill" that item
+# - When I click on that link or button I am returned
+# to the order show page
+# - I see the item is now fulfilled
+# - I also see a flash message indicating that I have
+# fulfilled that item
+# - the item's inventory quantity is permanently reduced
+# by the user's desired quantity
+#
+# If I have already fulfilled this item, I see text
+# indicating such.
     end
   end
 end
