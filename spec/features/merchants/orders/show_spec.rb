@@ -67,6 +67,10 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
           within ".order-items-#{@tire.id}" do
             expect(page).to have_link("Fulfill Item")
           end
+
+          within ".order-items-#{@paper.id}" do
+            expect(page).to_not have_link("Fulfill Item")
+          end
         end
         it 'When I click on that link or button I am returned to the order show page' do
           visit "/merchant/orders/#{@order_1.id}"
@@ -76,16 +80,21 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
             expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
           end
         end
-      end
+        it 'I see the item is now fulfilled and I also see a flash message indicating that I have fulfilled that item' do
+          visit "/merchant/orders/#{@order_1.id}"
 
-# than my current inventory quantity for that item
-# And I have not already "fulfilled" that item:
-# - Then I see a button or link to "fulfill" that item
-# - When I click on that link or button I am returned
-# to the order show page
-# - I see the item is now fulfilled
-# - I also see a flash message indicating that I have
-# fulfilled that item
+          within ".order-items-#{@tire.id}" do
+            click_on "Fulfill Item"
+            expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
+          end
+
+          expect(page).to have_content("Item #{@tire.id} (#{@tire.name}) is fulfilled for Order ID #{@order_1.id}")
+          within ".order-items-#{@tire.id}" do
+            expect(page).to_not have_link("Fulfill Item")
+            expect(page).to have_content("Item Fulfilled")
+          end
+        end
+      end
 # - the item's inventory quantity is permanently reduced
 # by the user's desired quantity
 #

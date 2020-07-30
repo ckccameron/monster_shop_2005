@@ -14,11 +14,12 @@
     <h4>Item Info</h4>
     <p><%= link_to "#{item.name}", "/items/#{item.id}" %></p>
     <p><%= image_tag(item.image) %></p>
-    <% item_order = @order.item_orders.where(item_id: item.id).first %>
-    <p><%= item_order.price %></p>
-    <p><%= item_order.quantity %></p>
-    <% if item_order.quantity <= item.inventory %>
-      <p><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}" %>
+    <% item_order = @order.item_orders.where(item_id: item.id).each do |item_order| %>
+      <p><%= item_order.price %></p>
+      <p><%= item_order.quantity %></p>
+      <% if item_order.quantity <= item.inventory %>
+        <p><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}" %>
+      <% end %>
     <% end %>
     <br>
   </section>
