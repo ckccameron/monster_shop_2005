@@ -17,8 +17,12 @@
     <% item_order = @order.item_orders.where(item_id: item.id).each do |item_order| %>
       <p><%= item_order.price %></p>
       <p><%= item_order.quantity %></p>
-      <% if item_order.quantity <= item.inventory %>
-        <p><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}", method: :patch %>
+      <% if item_order.quantity <= item.inventory && item_order.fulfill_status == "unfulfilled" %>
+        <p><%= link_to "Fulfill Item", "/merchant/item_orders/#{item_order.id}", method: :patch %>
+      <% elsif item_order.fulfill_status == "fulfilled" %>
+        <p>Item Fulfilled</p>
+      <% else %>
+        <p>Insufficient Inventory: Cannot Fulfill Item</p>
       <% end %>
     <% end %>
     <br>

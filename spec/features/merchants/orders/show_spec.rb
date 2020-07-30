@@ -70,6 +70,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
 
           within ".order-items-#{@paper.id}" do
             expect(page).to_not have_link("Fulfill Item")
+            expect(page).to have_content("Insufficient Inventory: Cannot Fulfill Item")
           end
         end
         it 'When I click on that link or button I am returned to the order show page' do
@@ -95,11 +96,6 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
           end
         end
       end
-# - the item's inventory quantity is permanently reduced
-# by the user's desired quantity
-#
-# If I have already fulfilled this item, I see text
-# indicating such.
     end
   end
 end
