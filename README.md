@@ -28,14 +28,13 @@ To check out our in-depth test suite, run:
 - This program uses the gem bcrypt
 
 **Schema Design**
-<embed src="https://dbdiagram.io/d/5f233eb27543d301bf5d5c75" width="500" height="375" 
- type="application/pdf">
+
 
 **Code Snippets**
 
 - Due to the nested nature of the routes needed to complete this project, we decided to use namespacing in order to make our routes more ReSTful. Additionally, this project required different users to have different levels of access to the site. Namespacing helped us to achieve this in an organized way.
 
-``namespace :merchant do
+`namespace :merchant do
     get "/", to: "dashboard#index"
     get "/items", to: "items#index"
     delete "/items/:id", to: "items#destroy"
@@ -67,19 +66,18 @@ To check out our in-depth test suite, run:
     get "/orders/:id", to: "orders#show"
     patch "/orders/:id", to: "orders#update"
   end
-end``
+end`
 
 - Originally, we set up our order status to use string values. However, we decided to overhaul our code and refactor to use enum values to streamline our database referencing and allow us to use ActiveRecord methods. The enum values are set up to use integer values that reference order statuses (i.e 0 = "packaged, 1 = "pending" and so on). 
 
-``class Order < ApplicationRecord
+`class Order < ApplicationRecord
   validates_presence_of :name, :address, :city, :state, :zip
 
   has_many :item_orders
   has_many :items, through: :item_orders
   belongs_to :user
 
-  enum status: %w(packaged pending shipped cancelled)
-``
+  enum status: %w(packaged pending shipped cancelled)`
 
 **Contributors**
 Cam Chery - @ckccameron
