@@ -1,0 +1,30 @@
+<h1>View Information for Order #<%= @order.id %></h1>
+<br>
+<section class="order-info">
+  <h4>Customer Information</h4>
+  <p><%= @order.name %></p>
+  <p><%= @order.address %></p>
+  <p><%= @order.city %>, <%= @order.state %>, <%= @order.zip %></p>
+</section>
+<br>
+
+<% @order.items.where(id: @merchant.items.pluck(:id)).each do |item| %>
+  <section class=<%= "order-items-#{item.id}" %>>
+    <br>
+    <h4>Item Info</h4>
+    <p><%= link_to "#{item.name}", "/items/#{item.id}" %></p>
+    <p><%= image_tag(item.image) %></p>
+    <% item_order = @order.item_orders.where(item_id: item.id).each do |item_order| %>
+      <p><%= item_order.price %></p>
+      <p><%= item_order.quantity %></p>
+      <% if item_order.quantity <= item.inventory && item_order.fulfill_status == "unfulfilled" %>
+        <p><%= link_to "Fulfill Item", "/merchant/item_orders/#{item_order.id}", method: :patch %>
+      <% elsif item_order.fulfill_status == "fulfilled" %>
+        <p>Item Fulfilled</p>
+      <% else %>
+        <p>Insufficient Inventory: Cannot Fulfill Item</p>
+      <% end %>
+    <% end %>
+    <br>
+  </section>
+<% end %>
