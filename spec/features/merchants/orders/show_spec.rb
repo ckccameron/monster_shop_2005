@@ -32,12 +32,12 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       it 'I see the recipients name and address that was used to create this order' do
         visit "/merchant/orders/#{@order_1.id}"
 
-        within ".orders-#{@order_1.id}" do
-          expect(page).to have_link(@order_1.name)
-          expect(page).to have_link(@order_1.address)
-          expect(page).to have_link(@order_1.city)
-          expect(page).to have_link(@order_1.state)
-          expect(page).to have_link(@order_1.zip)
+        within ".order-info" do
+          expect(page).to have_content(@order_1.name)
+          expect(page).to have_content(@order_1.address)
+          expect(page).to have_content(@order_1.city)
+          expect(page).to have_content(@order_1.state)
+          expect(page).to have_content(@order_1.zip)
         end
       end
     end
