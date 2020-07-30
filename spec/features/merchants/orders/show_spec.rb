@@ -68,6 +68,14 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
             expect(page).to have_link("Fulfill Item")
           end
         end
+        it 'When I click on that link or button I am returned to the order show page' do
+          visit "/merchant/orders/#{@order_1.id}"
+
+          within ".order-items-#{@tire.id}" do
+            click_on "Fulfill Item"
+            expect(current_path).to eq("/merchant/orders/#{@order_1.id}")
+          end
+        end
       end
 
 # than my current inventory quantity for that item
