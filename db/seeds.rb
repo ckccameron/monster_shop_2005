@@ -28,6 +28,10 @@ Item.destroy_all
 @mike = Merchant.create(name: "Mike's Print Shop", address: '123 Paper Rd.', city: 'Denver', state: 'CO', zip: 80203)
 @cox = Merchant.create(name: "Cox Smoker's Outlet", address: '789 Puffy Ave', city: 'Louisville', state: 'KY', zip: 40018)
 
+#merchant_users
+MerchantUser.create(merchant: @meg, user: @merchant_user_1)
+MerchantUser.create(merchant: @cox, user: @merchant_user_2)
+
 #items
 @pull_toy = @brian.items.create(name: "Pull Toy", description: "Great pull toy!", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 32)
 @catnip = @brian.items.create(name: "Catnip", description: "It'll get your cat super high", price: 10, image: "http://lovencaretoys.com/image/cache/dog/tug-toy-dog-pull-9010_2-800x800.jpg", inventory: 50)
