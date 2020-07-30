@@ -19,7 +19,7 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
       @order_4 = Order.create!(name: 'Jim Ramessye', address: '33 Pineapple St', city: 'New York', state: 'NY', zip: '12345', user: @jim)
       @item_order_1 = @order_1.item_orders.create!(item: @tire, price: @tire.price, quantity: 2)
       @item_order_2 = @order_1.item_orders.create!(item: @paper, price: @paper.price, quantity: 10)
-      @item_order_3 = @order_3.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 2)
+      @item_order_3 = @order_1.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 2)
       @item_order_3 = @order_4.item_orders.create!(item: @octopus, price: @octopus.price, quantity: 1)
 
       visit '/login'
@@ -40,19 +40,32 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
           expect(page).to have_content(@order_1.zip)
         end
       end
+      it 'I only see the items in the order that are being purchased from my merchant and not from another merchant' do
+        visit "/merchant/orders/#{@order_1.id}"
+
+        within ".order-items" do
+          expect(page).to have_content(@tire.name)
+          expect(page).to_not have_content(@octopus.name)
+        end
+      end
+      it 'For each item, I see the 1. item name which is a link to the item show page, 2. item image, 3. price for item, 4. item order quantity' do
+        visit "/merchant/orders/#{@order_1.id}"
+
+        within ".order-items" do
+          save_and_open_page
+          expect(page).to have_content(@tire.name)
+          expect(page).to have_content(@tire.image)
+          expect(page).to have_content(@item_order_1.price)
+          expect(page).to have_content(@item_order_1.quantity)
+        end
+      end
     end
   end
 end
 # User Story 49, Merchant sees an order show page
 #
 # As a merchant employee
-# When I visit an order show page from my dashboard
-# I see the recipients name and address that was used
-# to create this order
-# I only see the items in the order that are being
-# purchased from my merchant
-# I do not see any items in the order being purchased
-# from other merchants
+
 # For each item, I see the following information:
 # - the name of the item, which is a link to my item's
 # show page

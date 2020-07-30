@@ -7,3 +7,15 @@
   <p><%= @order.city %>, <%= @order.state %>, <%= @order.zip %></p>
 </section>
 <br>
+<section class="order-items">
+  <% @order.items.where(id: @merchant.items.pluck(:id)).each do |item| %>
+    <br>
+    <h4>Item Info</h4>
+    <p><%= item.name %></p>
+    <p><%= item.image %></p>
+    <% item_order = @order.item_orders.where(item_id: item.id).first %>
+    <p><%= item_order.price %></p>
+    <p><%= item_order.quantity %></p>
+    <br>
+  <% end %>
+</section>
