@@ -1,13 +1,17 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# # This file should contain all the record creation needed to seed the database with its default values.
+# # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# #
+# # Examples:
+# #
+# #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+# #   Character.create(name: 'Luke', movie: movies.first)
 #
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
 
-#Merchant.destroy_all
-#Item.destroy_all
+ItemOrder.destroy_all
+Order.destroy_all
+User.destroy_all
+Merchant.destroy_all
+Item.destroy_all
 
 #merchants
 bike_shop = Merchant.create(name: "Meg's Bike Shop", address: '123 Bike Rd.', city: 'Denver', state: 'CO', zip: 80203)
@@ -30,3 +34,4 @@ item_order_2 = order_1.item_orders.create!(item: dog_bone, price: dog_bone.price
 item_order_3 = order_2.item_orders.create!(item: pull_toy, price: pull_toy.price, quantity: 5)
 item_order_4 = order_2.item_orders.create!(item: dog_bone, price: dog_bone.price, quantity: 4)
 item_order_5 = order_2.item_orders.create!(item: tire, price: tire.price, quantity: 5)
+

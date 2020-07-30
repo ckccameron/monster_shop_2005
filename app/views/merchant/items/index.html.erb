@@ -1,0 +1,25 @@
+<h2>Items in <%= @merchant.name %></h2>
+<section class="all-orders">
+  <% @merchant.items.distinct.each do |item| %>
+  <section class = "items-<%= item.id %>">
+    <p><%= item.name %></p>
+    <p><%= item.description %></p>
+    <p><%= item.price %></p>
+    <p><%= item.image %></p>
+    <% if item.active? %>
+      <p>Status: Active</p>
+    <% else %>
+      <p>Status: Inactive</p>
+    <% end %>
+    <p><%= item.inventory %></p>
+    <% if item.active? %>
+      <p><%= link_to "Deactivate", "/merchant/items/#{item.id}?type=deact", method: :patch %>
+    <% else %>
+      <p><%= link_to "Activate", "/merchant/items/#{item.id}?type=activ", method: :patch %>
+    <% end %>
+    <% if item.no_orders? %>
+      <%= link_to "Delete Item", "/merchant/items/#{item.id}", method: :delete %>
+    <% end %>
+  <% end %>
+</section>
+<%= link_to "Add Item", "/merchant/items/new" %>

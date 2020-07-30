@@ -123,11 +123,7 @@ RSpec.describe 'Cart show' do
 
         expect(current_path).to eq('/profile/orders')
         expect(page).to have_content("You have a new order!")
-        expect(page).to have_content(new_order.name)
-
-        within 'nav' do
-          expect(page).to_not have_content("Cart")
-        end
+        expect(page).to have_content(new_order.grandtotal)
       end
     end
   end

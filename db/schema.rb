@@ -40,6 +40,13 @@ ActiveRecord::Schema.define(version: 20200729202413) do
     t.index ["merchant_id"], name: "index_items_on_merchant_id"
   end
 
+  create_table "merchant_users", force: :cascade do |t|
+    t.bigint "merchant_id"
+    t.bigint "user_id"
+    t.index ["merchant_id"], name: "index_merchant_users_on_merchant_id"
+    t.index ["user_id"], name: "index_merchant_users_on_user_id"
+  end
+
   create_table "merchants", force: :cascade do |t|
     t.string "name"
     t.string "address"
@@ -48,6 +55,7 @@ ActiveRecord::Schema.define(version: 20200729202413) do
     t.integer "zip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "status", default: "enabled"
   end
 
   create_table "orders", force: :cascade do |t|
@@ -81,12 +89,14 @@ ActiveRecord::Schema.define(version: 20200729202413) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "role"
+    t.integer "role", default: 0
   end
 
   add_foreign_key "item_orders", "items"
   add_foreign_key "item_orders", "orders"
   add_foreign_key "items", "merchants"
+  add_foreign_key "merchant_users", "merchants"
+  add_foreign_key "merchant_users", "users"
   add_foreign_key "orders", "users"
   add_foreign_key "reviews", "items"
 end
