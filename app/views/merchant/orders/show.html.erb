@@ -11,8 +11,8 @@
   <% @order.items.where(id: @merchant.items.pluck(:id)).each do |item| %>
     <br>
     <h4>Item Info</h4>
-    <p><%= item.name %></p>
-    <p><%= item.image %></p>
+    <p><%= link_to "#{item.name}", "/items/#{item.id}" %></p>
+    <p><%= image_tag(item.image) %></p>
     <% item_order = @order.item_orders.where(item_id: item.id).first %>
     <p><%= item_order.price %></p>
     <p><%= item_order.quantity %></p>

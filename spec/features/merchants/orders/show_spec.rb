@@ -52,23 +52,15 @@ RSpec.describe 'merchant dashboard show page', type: :feature do
         visit "/merchant/orders/#{@order_1.id}"
 
         within ".order-items" do
-          save_and_open_page
-          expect(page).to have_content(@tire.name)
-          expect(page).to have_content(@tire.image)
+          expect(page).to have_link(@tire.name)
+          expect(page).to have_selector("img[src$='#{@tire.image}']")
           expect(page).to have_content(@item_order_1.price)
           expect(page).to have_content(@item_order_1.quantity)
+
+          click_on "#{@tire.name}"
+          expect(current_path).to eq("/items/#{@tire.id}")
         end
       end
     end
   end
 end
-# User Story 49, Merchant sees an order show page
-#
-# As a merchant employee
-
-# For each item, I see the following information:
-# - the name of the item, which is a link to my item's
-# show page
-# - an image of the item
-# - my price for the item
-# - the quantity the user wants to purchase
