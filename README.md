@@ -28,7 +28,8 @@ To check out our in-depth test suite, run:
 - This program uses the gem bcrypt
 
 **Schema Design**
-![Monster Shop Schema](monster_shop_schema.png)
+
+<img width="747" alt="Screen Shot 2020-07-30 at 6 00 56 PM" src="https://user-images.githubusercontent.com/57038617/88979038-1350dc00-d27e-11ea-9ed5-a8dd25113286.png">
 
 **Code Snippets**
 
