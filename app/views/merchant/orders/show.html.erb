@@ -18,7 +18,7 @@
       <p><%= item_order.price %></p>
       <p><%= item_order.quantity %></p>
       <% if item_order.quantity <= item.inventory %>
-        <p><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}" %>
+        <p><%= link_to "Fulfill Item", "/merchant/orders/#{@order.id}", method: :patch %>
       <% end %>
     <% end %>
     <br>
