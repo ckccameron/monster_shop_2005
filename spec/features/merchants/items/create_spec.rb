@@ -34,20 +34,48 @@ RSpec.describe "A merchant can create a new item" do
 
     click_button "Create Item"
 
-    @new_item = Item.last
+    new_item = Item.last
 
     expect(current_path).to eq('/merchant/items')
 
-    expect(page).to have_content("#{@new_item.name} has been created")
+    expect(page).to have_content("#{new_item.name} has been created")
+    
+    within ".items-#{new_item.id}" do
 
-    within ".items-#{@new_item.id}" do
-
-      expect(page).to have_content(@new_item.name)
-      expect(page).to have_content(@new_item.description)
-      expect(page).to have_content(@new_item.price)
+      expect(page).to have_content(new_item.name)
+      expect(page).to have_content(new_item.description)
+      expect(page).to have_content(new_item.price)
       expect(page).to have_content("Active")
-      expect(page).to have_content(@new_item.inventory)
-      expect(page).to have_content(@new_item.image)
+      expect(page).to have_content(new_item.inventory)
+      expect(page).to have_content(new_item.image)
+    end
+  end
+
+  describe "When I try to add a new item If any of my data is incorrect or missing (except image)" do
+    xit "Then I am returned to the form I see one or more flash messages indicating each error I caused and all fields are re-populated with my previous data" do
+
+      visit '/login'
+
+      visit "/merchant/items"
+
+      expect(page).to have_link("Add Item")
+
+      click_on "Add Item"
+
+      expect(current_path).to eq("/merchant/items/new")
+
+      fill_in :name, with: @name
+      fill_in :price, with: @price
+      fill_in :inventory, with: @inventory
+
+      click_button "Create Item"
+
+      expect(current_path).to eq("/merchant/items/new")
+      expect(page).to have_content("Description can't be blank")
+      expect(page).to have_content(@name)
+      expect(page).to have_content(@price)
+      expect(page).to have_content(@inventory)
+
     end
   end
 end
