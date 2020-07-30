@@ -33,7 +33,6 @@ RSpec.describe "A merchant can delete one of their items" do
     expect(current_path).to eq("/merchant/items")
 
     expect(page).to have_content("#{@chain.name} has now been deleted")
-    save_and_open_page
 
     within ".items-#{@tire.id}" do
       expect(page).to_not have_content("Delete Item")
