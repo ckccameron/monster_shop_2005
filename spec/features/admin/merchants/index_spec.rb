@@ -104,4 +104,28 @@ RSpec.describe "Merchants index page" do
 
     expect(current_path).to eq("/admin/merchants/#{@meg.id}")
   end
+
+  it "I see a list of all merchants and their city and state" do
+    visit '/admin/merchants'
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content(@meg.city)
+      expect(page).to have_content(@meg.state)
+
+      click_link "#{@meg.name}"
+    end
+
+    expect(current_path).to eq("/admin/merchants/#{@meg.id}")
+
+    visit '/admin/merchants'
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content("Disable")
+      click_link "Disable"
+    end
+
+    within ".merchant-#{@meg.id}" do
+      expect(page).to have_content("Enable")
+    end
+  end
 end
