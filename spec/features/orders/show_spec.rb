@@ -79,7 +79,7 @@ RSpec.describe "User views an order show page" do
     expect(current_path).to eq("/profile")
 
     expect(page).to have_content("Order #{@new_order.id} has now been cancelled")
-    
+
     visit "/profile/orders/#{@new_order.id}"
 
     within ".order-status" do
@@ -109,5 +109,18 @@ RSpec.describe "User views an order show page" do
     within "#total-item-qty" do
       expect(page).to have_content("0")
     end
+  end
+
+  it "changes order status from pending to packaged when all order items are fulfilled" do
+    order = Order.create!(name: 'Neeru Ericsson', address: '33 Cherry St', city: 'Denver', state: 'CO', zip: '12346', user_id: @regular_user.id, status: "pending")
+
+    order.item_orders.create!(item: @paper, price: @paper.price, quantity: 10, status: "FULFILLED")
+    order.item_orders.create!(item: @pencil, price: @pencil.price, quantity: 3, status: "FULFILLED")
+    order.item_orders.create!(item: @tire, price: @tire.price, quantity: 2, status: "FULFILLED")
+
+    order.status_packaged
+
+    visit "/profile/orders/#{order.id}"
+    expect(page).to have_content("Order Status: packaged")
   end
 end

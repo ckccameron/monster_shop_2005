@@ -1,0 +1,34 @@
+<% if @user.default? %>
+<h1><%= @user.name %>'s Profile</h1>
+  <p><%= @user.name %></p>
+  <p><%= @user.address %></p>
+  <p><%= @user.city %></p>
+  <p><%= @user.state %></p>
+  <p><%= @user.zip %></p>
+  <p><%= @user.email %></p>
+
+  <p><%= link_to "Edit Password", "/profile/password/edit", method: :get %></p>
+  <p><%= link_to "My Orders", "/profile/orders" %></p>
+
+  <% else @user.merchant? %>
+
+  <h2>User: <%= @user.name %></h2>
+    <h2>Merchant: <%= @user.merchants.first.name %></h2>
+    <p><%= @user.merchants.first.address %></p>
+    <p><%= @user.merchants.first.city %> <%= @user.merchants.first.state %> <%= @user.merchants.first.zip %></p>
+    <h3><%= link_to "View All Merchant Items", "/admin/merchant/#{@user.merchants.first.id}/items" %></h3>
+    <h3>All Pending Orders:</h3>
+    <section class="pending-orders">
+      <% if @user.merchants.first.pending_orders.empty? %>
+        <p>No Orders<p>
+      <% else %>
+      <% @user.merchants.first.pending_orders.each do |order| %>
+        <p><%= link_to "Order ID: #{order.id}", "/admin/merchants/orders/#{order.id}" %></p>
+        <p>Order Date: <%= order.created_at %></p>
+        <p>Item Quantity: <%= order.total_quantity  %></p>
+        <p>Total Value: <%= order.total_value  %></p>
+      <% end %>
+    </section>
+  <% end %>
+
+  <% end %>

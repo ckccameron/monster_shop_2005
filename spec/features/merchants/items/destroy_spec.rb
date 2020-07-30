@@ -39,4 +39,9 @@ RSpec.describe "A merchant can delete one of their items" do
     end
 
   end
+
+  # it "I can't delete an item that has orders" do
+  #   visit '/merchant/items'
+  #
+  # end
 end
