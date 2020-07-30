@@ -88,12 +88,6 @@ class Order < ApplicationRecord
   enum status: %w(packaged pending shipped cancelled)
 ```
 
-**Contributors**
-- Cam Chery - @ckccameron
-- Jessye Ejdelman - @ejdelsztejn
-- Eric Hale - @ehale64
-- Neeru Ram - @neeruram1
-
 **Acknowledgments**
 Our instructors during Module 2 at Turing School:
 Meg Stang, Cory Westerfield, Brian Zanti
