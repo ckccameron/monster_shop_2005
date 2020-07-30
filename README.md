@@ -4,6 +4,12 @@
 **Description**
 Monster Shop is a fictitious e-commerce platform where users can register to place items into a shopping cart and 'check out'. Users who work for a merchant can mark their items as 'fulfilled'; the last merchant to mark items in an order as 'fulfilled' will be able to get "shipped" by an admin. Each user role will have access to some or all CRUD functionality for application models.
 
+**Contributors**
+- [Cam Chery](https://github.com/ckccameron)
+- [Jessye Ejdelman](https://github.com/ejdelsztejn)
+- [Eric Hale](https://github.com/ehale64)
+- [Neeru Ram](https://github.com/neeruram1)
+
 **Implementation**
 In order to use our Monster Shop, you'll need to follow these steps:
 
